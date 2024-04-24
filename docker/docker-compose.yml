@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  db-produto:
+    image: postgres:latest
+    container_name: db-produto
+    environment:
+      POSTGRES_USER: dbproduto
+      POSTGRES_PASSWORD: passdbproduto
+      POSTGRES_DB: db-produto
+    ports:
+      - "5432:5432"
+    volumes:
+      - produto-data:/var/lib/postgresql/data
+
+  db-cliente:
+    image: postgres:latest
+    container_name: db-cliente
+    environment:
+      POSTGRES_USER: dbcliente
+      POSTGRES_PASSWORD: passdbcliente
+      POSTGRES_DB: db-cliente
+    ports:
+      - "5433:5432"
+    volumes:
+      - cliente-data:/var/lib/postgresql/data
+
+  db-pedido:
+    image: postgres:latest
+    container_name: db-pedido
+    environment:
+      POSTGRES_USER: dbpedido
+      POSTGRES_PASSWORD: passdbpedido
+      POSTGRES_DB: db-pedido
+    ports:
+      - "5434:5432"
+    volumes:
+      - pedido-data:/var/lib/postgresql/data
+
+  db-logistica:
+    image: postgres:latest
+    container_name: db-logistica
+    environment:
+      POSTGRES_USER: dblogistica
+      POSTGRES_PASSWORD: passdblogistica
+      POSTGRES_DB: db-logistica
+    ports:
+      - "5435:5432"
+    volumes:
+      - logistica-data:/var/lib/postgresql/data
+
+  ms-catalogo-produtos:
+    container_name: ms-catalogo-produtos
+    build: ../ms-catalogo-produtos/.
+    ports:
+      - "8081:8080"
+    depends_on:
+      - -db-produto
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
+      SPRING_DATASOURCE_USERNAME: dbproduto
+      SPRING_DATASOURCE_PASSWORD: passdbproduto
+
+  ms-gerenciamento-clientes:
+    container_name: ms-gerenciamento-clientes
+    build: ../ms-gerenciamento-clientes/.
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db-cliente
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-cliente:5432/db-cliente
+      SPRING_DATASOURCE_USERNAME: dbcliente
+      SPRING_DATASOURCE_PASSWORD: passdbcliente
+  
+  ms-gestao-pedidos:
+    container_name: ms-gestao-pedidos
+    build: ../ms-gestao-pedidos/.
+    ports:
+      - "8083:8080"
+    depends_on:
+      - db-pedido
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-pedido:5432/db-pedido
+      SPRING_DATASOURCE_USERNAME: dbpedido
+      SPRING_DATASOURCE_PASSWORD: passdbpedido
+
+  ms-logistica-entregas:
+    container_name: ms-logistica-entregas
+    build: ../ms-logistica-entregas/.
+    ports:
+      - "8084:8080"
+    depends_on:
+      - db-logistica
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-logistica:5432/db-logistica
+      SPRING_DATASOURCE_USERNAME: dblogistica
+      SPRING_DATASOURCE_PASSWORD: passdblogistica
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8090:8080
+
+volumes:
+  produto-data:
+  cliente-data:
+  pedido-data:
+  logistica-data:
