@@ -7,8 +7,6 @@ import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.Atua
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.CadastrarCliente;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.ObterClientePeloId;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.RemoverClientePeloId;
-import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.exception.BussinessErrorException;
-import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.exception.EntityNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -37,48 +35,31 @@ public class ClienteController {
     @PostMapping(produces = "application/json")
     @Transactional
     public ResponseEntity<?> create(@RequestBody ClienteInsertDTO clienteInsertDTO) {
-        try {
-            Cliente cliente = cadastrarCliente.execute(clienteInsertDTO);
-            return new ResponseEntity<>(cliente, HttpStatus.CREATED);
-        } catch (BussinessErrorException bussinessErrorException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bussinessErrorException.getMessage());
-        }
+        Cliente cliente = cadastrarCliente.execute(clienteInsertDTO);
+        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Altera os dados do cliente", description = "Serviço utilizado para alterar os dados do cliente.")
     @PutMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody ClienteUpdateDTO clienteUpdateDTO) {
-        try {
-            var clienteRetorno = atualizarCliente.execute(id, clienteUpdateDTO);
-            return new ResponseEntity<>(clienteRetorno, HttpStatus.ACCEPTED);
-        } catch (BussinessErrorException bussinessErrorException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bussinessErrorException.getMessage());
-        }
+        var clienteRetorno = atualizarCliente.execute(id, clienteUpdateDTO);
+        return new ResponseEntity<>(clienteRetorno, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Busca o cliente pelo Id", description = "Serviço utilizado para buscar o cliente pelo Id.")
     @GetMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> findById(@PathVariable String id) {
-        try {
-            var cliente = obterClientePeloId.execute(id);
-            return new ResponseEntity<>(cliente, HttpStatus.OK);
-        } catch (EntityNotFoundException entityNotFoundException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entityNotFoundException.getMessage());
-        }
+        var cliente = obterClientePeloId.execute(id);
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
     @Operation(summary = "Remove o cliente pelo Id", description = "Serviço utilizado para remover o cliente pelo Id.")
     @DeleteMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable String id) {
-        try {
-            removerClientePeloId.execute(id);
-            return new ResponseEntity<>("Cliente Removido", HttpStatus.OK);
-        } catch (BussinessErrorException bussinessErrorException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bussinessErrorException.getMessage());
-        }
+         removerClientePeloId.execute(id);
+         return new ResponseEntity<>("Cliente Removido", HttpStatus.OK);
     }
-
 }

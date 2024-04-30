@@ -43,7 +43,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(BussinessErrorException.class)
     public ResponseEntity<ErrorDefaultResponse> bussinessError(Exception e, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         errorReponse.setTimestamp(Instant.now());
         errorReponse.setStatus("KO");
         errorReponse.setMessage(e.getMessage());
