@@ -15,7 +15,7 @@ public class RemoverClientePeloId {
         this.clienteGateway = clienteGateway;
     }
 
-    public boolean execute(String id) {
+    public void execute(String id) {
         Optional<Cliente> clienteOptional = clienteGateway.findById(id);
 
         if (clienteOptional.isEmpty()) {
@@ -23,7 +23,6 @@ public class RemoverClientePeloId {
         }
 
         clienteGateway.remove(id);
-        return true;
     }
 
 }

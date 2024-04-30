@@ -1,6 +1,5 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.model;
 
-import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.endereco.model.Endereco;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb_cliente")
 @Data
-@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {
@@ -28,12 +26,8 @@ public class Cliente {
     private String nome;
 
     @NotNull
-    private String situacao;
-
-    @NotNull
     private LocalDateTime dataRegistro;
 
     private LocalDate dataNascimento;
 
-    //private Endereco endereco;
 }

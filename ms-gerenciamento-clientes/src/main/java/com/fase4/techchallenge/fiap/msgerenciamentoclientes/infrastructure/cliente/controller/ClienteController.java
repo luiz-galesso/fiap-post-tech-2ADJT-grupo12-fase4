@@ -74,7 +74,7 @@ public class ClienteController {
     @Transactional
     public ResponseEntity<?> delete(@PathVariable String id) {
         try {
-            var cliente = removerClientePeloId.execute(id);
+            removerClientePeloId.execute(id);
             return new ResponseEntity<>("Cliente Removido", HttpStatus.OK);
         } catch (BussinessErrorException bussinessErrorException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bussinessErrorException.getMessage());

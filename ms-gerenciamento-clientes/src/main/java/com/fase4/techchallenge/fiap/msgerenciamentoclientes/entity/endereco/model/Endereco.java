@@ -1,23 +1,24 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.endereco.model;
 
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.model.Cliente;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Embeddable
+@Entity
 @Table(name = "tb_endereco")
-@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
+  @ManyToOne
   private Cliente cliente;
 
   private String logradouro;

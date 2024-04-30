@@ -25,10 +25,8 @@ public class AtualizarCliente {
 
         Cliente cliente = new Cliente(email,
                 clienteUpdateDTO.getNome(),
-                clienteUpdateDTO.getSituacao(),
                 clienteOptional.get().getDataRegistro(),
                 clienteUpdateDTO.getDataNascimento()
-                //clienteUpdateDTO.getEndereco()
         );
         return this.clienteGateway.update(cliente);
     }

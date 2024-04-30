@@ -12,7 +12,5 @@ public class ClienteInsertDTO {
 
     private String email;
     private String nome;
-    private String situacao;
     private LocalDate dataNascimento;
-    private Endereco endereco;
 }
