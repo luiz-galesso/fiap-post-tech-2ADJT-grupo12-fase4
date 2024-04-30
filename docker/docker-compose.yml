@@ -49,41 +49,41 @@ services:
     volumes:
       - logistica-data:/var/lib/postgresql/data
 
-  ms-catalogo-produtos:
-    container_name: ms-catalogo-produtos
-    build: ../ms-catalogo-produtos/.
-    ports:
-      - "8081:8080"
-    depends_on:
-      - -db-produto
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
-      SPRING_DATASOURCE_USERNAME: dbproduto
-      SPRING_DATASOURCE_PASSWORD: passdbproduto
+#  ms-catalogo-produtos:
+#    container_name: ms-catalogo-produtos
+#    build: ../ms-catalogo-produtos/.
+#    ports:
+#      - "8081:8080"
+#    depends_on:
+#      - db-produto
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
+#      SPRING_DATASOURCE_USERNAME: dbproduto
+#      SPRING_DATASOURCE_PASSWORD: passdbproduto
 
-  ms-gerenciamento-clientes:
-    container_name: ms-gerenciamento-clientes
-    build: ../ms-gerenciamento-clientes/.
-    ports:
-      - "8082:8080"
-    depends_on:
-      - db-cliente
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db-cliente:5432/db-cliente
-      SPRING_DATASOURCE_USERNAME: dbcliente
-      SPRING_DATASOURCE_PASSWORD: passdbcliente
+ # ms-gerenciamento-clientes:
+ #   container_name: ms-gerenciamento-clientes
+ #   build: ../ms-gerenciamento-clientes/.
+ #   ports:
+ #     - "8082:8080"
+ #   depends_on:
+ #     - db-cliente
+ #   environment:
+ #     SPRING_DATASOURCE_URL: jdbc:postgresql://db-cliente:5432/db-cliente
+ #     SPRING_DATASOURCE_USERNAME: dbcliente
+ #     SPRING_DATASOURCE_PASSWORD: passdbcliente
   
-  ms-gestao-pedidos:
-    container_name: ms-gestao-pedidos
-    build: ../ms-gestao-pedidos/.
-    ports:
-      - "8083:8080"
-    depends_on:
-      - db-pedido
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db-pedido:5432/db-pedido
-      SPRING_DATASOURCE_USERNAME: dbpedido
-      SPRING_DATASOURCE_PASSWORD: passdbpedido
+#  ms-gestao-pedidos:
+#    container_name: ms-gestao-pedidos
+#    build: ../ms-gestao-pedidos/.
+#    ports:
+#      - "8083:8080"
+#    depends_on:
+#      - db-pedido
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db-pedido:5432/db-pedido
+#      SPRING_DATASOURCE_USERNAME: dbpedido
+#      SPRING_DATASOURCE_PASSWORD: passdbpedido
 
   ms-logistica-entregas:
     container_name: ms-logistica-entregas
