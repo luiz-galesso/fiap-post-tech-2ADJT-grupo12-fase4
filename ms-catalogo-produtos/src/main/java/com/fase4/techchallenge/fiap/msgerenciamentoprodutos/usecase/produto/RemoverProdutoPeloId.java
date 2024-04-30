@@ -15,7 +15,7 @@ public class RemoverProdutoPeloId {
         this.produtoGateway = produtoGateway;
     }
 
-    public boolean execute(String id) {
+    public boolean execute(Long id) {
         Optional<Produto> produtoOptional = produtoGateway.findById(id);
 
         if (produtoOptional.isEmpty()) {

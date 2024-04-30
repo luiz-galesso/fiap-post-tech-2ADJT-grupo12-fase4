@@ -1,15 +1,13 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,14 +19,24 @@ import java.time.LocalDateTime;
 public class Produto {
 
     @Id
-    private String codProduto;
-    @NotNull
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long codProduto;
+    @NotBlank
+    @Column(unique = true)
     private String descricaoProduto;
-    @NotNull
+    @NotBlank
+    private String marca;
+    @NotBlank
     private String categoria;
     @NotNull
     private Long quantidade;
-    @NotNull
     private LocalDateTime dataAtualizacao;
 
+    public Produto(String descricaoProduto, String marca, String categoria, Long quantidade, LocalDateTime dataAtualizacao) {
+        this.descricaoProduto = descricaoProduto;
+        this.marca = marca;
+        this.categoria = categoria;
+        this.quantidade = quantidade;
+        this.dataAtualizacao = dataAtualizacao;
+    }
 }

@@ -5,13 +5,6 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-public class ProdutoUpdateDTO {
+public record ProdutoUpdateDTO (String descricaoProduto, String marca, String categoria, Long quantidade){
 
-    private String codProduto;
-    private String descricaoProduto;
-    private String categoria;
-    private Long quantidade;
-    private LocalDateTime dataAtualizacao;
-}
+};

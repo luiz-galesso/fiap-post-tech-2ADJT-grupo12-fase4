@@ -13,7 +13,7 @@ public class ObterProdutoPeloId {
         this.produtoGateway = produtoGateway;
     }
 
-    public Produto execute(String id) {
+    public Produto execute(Long id) {
         return this.produtoGateway.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não localizado"));
     }
 

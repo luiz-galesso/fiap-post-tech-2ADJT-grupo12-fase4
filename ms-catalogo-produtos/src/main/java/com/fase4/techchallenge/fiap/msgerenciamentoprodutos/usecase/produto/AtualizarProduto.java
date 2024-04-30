@@ -16,18 +16,19 @@ public class AtualizarProduto {
 
     private final ProdutoGateway produtoGateway;
 
-    public Produto execute(String codProduto, ProdutoUpdateDTO produtoUpdateDTO) {
+    public Produto execute(Long codProduto, ProdutoUpdateDTO produtoUpdateDTO) {
 
         Optional<Produto> produtoOptional = produtoGateway.findById(codProduto);
 
         if (produtoOptional.isEmpty()) {
-            throw new BussinessErrorException("Não foi encontrado o produto cadastrado com o email informado.");
+            throw new BussinessErrorException("Não foi encontrado o produto cadastrado com o identificador informado.");
         }
 
-        Produto produto = new Produto(produtoUpdateDTO.getCodProduto(),
-                produtoUpdateDTO.getDescricaoProduto(),
-                produtoUpdateDTO.getCategoria(),
-                produtoUpdateDTO.getQuantidade(),
+        Produto produto = new Produto(codProduto,
+                produtoUpdateDTO.descricaoProduto(),
+                produtoUpdateDTO.marca(),
+                produtoUpdateDTO.categoria(),
+                produtoUpdateDTO.quantidade(),
                 LocalDateTime.now()
         );
         return this.produtoGateway.update(produto);

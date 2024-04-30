@@ -23,12 +23,12 @@ public class ProdutoGateway {
         return this.produtoRepository.save(produto);
     }
 
-    public Optional<Produto> findById(String email) {
-        return this.produtoRepository.findById(email);
+    public Optional<Produto> findById(Long codProduto) {
+        return this.produtoRepository.findById(codProduto);
     }
 
-    public void remove(String email) {
-        produtoRepository.deleteById(email);
+    public void remove(Long codProduto) {
+        produtoRepository.deleteById(codProduto);
     }
 
 }

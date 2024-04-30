@@ -1,18 +1,19 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
-import java.time.LocalDateTime;
+public record ProdutoInsertDTO(
+        @NotNull
+        String descricaoProduto,
+        @NotNull
+        String marca,
+        @NotNull
+        String categoria,
+        @NotNull
+        Long quantidade
 
-@Data
-@AllArgsConstructor
-public class ProdutoInsertDTO {
+) {
 
-    private String codProduto;
-    private String descricaoProduto;
-    private String categoria;
-    private Long quantidade;
-    private LocalDateTime dataAtualizacao;
 
-}
+};

@@ -3,6 +3,7 @@ package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.exce
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.BussinessErrorException;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -49,5 +50,16 @@ public class ControllerExceptionHandler {
         errorReponse.setMessage(e.getMessage());
         return ResponseEntity.status(status).body(this.errorReponse);
     }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorDefaultResponse> dataIntegrityViolationError(Exception e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        errorReponse.setTimestamp(Instant.now());
+        errorReponse.setStatus("KO");
+        errorReponse.setMessage("A INTEGRIDADE DOS DADOS FOI VIOLADA");
+        return ResponseEntity.status(status).body(this.errorReponse);
+    }
+
+
 
 }

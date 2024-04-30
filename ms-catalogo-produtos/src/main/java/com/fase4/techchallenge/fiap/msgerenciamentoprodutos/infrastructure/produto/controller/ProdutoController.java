@@ -48,7 +48,7 @@ public class ProdutoController {
     @Operation(summary = "Altera os dados do produto", description = "Serviço utilizado para alterar os dados do produto.")
     @PutMapping(value = "/{id}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ProdutoUpdateDTO produtoUpdateDTO) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProdutoUpdateDTO produtoUpdateDTO) {
         try {
             var produtoRetorno = atualizarProduto.execute(id, produtoUpdateDTO);
             return new ResponseEntity<>(produtoRetorno, HttpStatus.ACCEPTED);
@@ -60,7 +60,7 @@ public class ProdutoController {
     @Operation(summary = "Busca o produto pelo Id", description = "Serviço utilizado para buscar o produto pelo Id.")
     @GetMapping(value = "/{id}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> findById(@PathVariable String id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             var produto = obterProdutoPeloId.execute(id);
             return new ResponseEntity<>(produto, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class ProdutoController {
     @Operation(summary = "Remove o produto pelo Id", description = "Serviço utilizado para remover o produto pelo Id.")
     @DeleteMapping(value = "/{id}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             var produto = removerProdutoPeloId.execute(id);
             return new ResponseEntity<>("Produto Removido", HttpStatus.OK);

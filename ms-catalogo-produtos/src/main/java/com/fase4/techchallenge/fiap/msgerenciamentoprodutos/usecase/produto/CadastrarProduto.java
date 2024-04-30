@@ -5,6 +5,7 @@ import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.BussinessErrorException;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,20 +19,14 @@ public class CadastrarProduto {
 
     public Produto execute(ProdutoInsertDTO produtoDTO) {
 
-        Optional<Produto> produtoOptional = produtoGateway.findById(produtoDTO.getCodProduto());
-
-        if (produtoOptional.isPresent()) {
-            throw new BussinessErrorException("Já existe um produto cadastrado com o email informado.");
-        }
-
-        Produto produto =
-                new Produto(
-                        produtoDTO.getCodProduto(),
-                        produtoDTO.getDescricaoProduto(),
-                        produtoDTO.getCategoria(),
-                        produtoDTO.getQuantidade(),
-                        LocalDateTime.now()
-                );
-        return this.produtoGateway.create(produto);
+            Produto produto =
+                    new Produto(
+                            produtoDTO.descricaoProduto(),
+                            produtoDTO.marca(),
+                            produtoDTO.categoria(),
+                            produtoDTO.quantidade(),
+                            LocalDateTime.now()
+                    );
+            return this.produtoGateway.create(produto);
     }
 }
