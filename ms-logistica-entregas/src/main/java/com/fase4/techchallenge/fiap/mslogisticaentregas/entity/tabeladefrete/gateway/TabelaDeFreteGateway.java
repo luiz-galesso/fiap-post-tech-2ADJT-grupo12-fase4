@@ -2,6 +2,7 @@ package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.ga
 
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.tabeladefrete.repository.TabelaDeFreteRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -17,6 +18,8 @@ public class TabelaDeFreteGateway {
     public TabelaDeFrete update(TabelaDeFrete tabelaDeFrete) { return this.tabelaDeFreteRepository.save(tabelaDeFrete);}
 
     public Optional<TabelaDeFrete> findById(Long id) { return this.tabelaDeFreteRepository.findById(id);}
+
+    public Optional<TabelaDeFrete> findTabelaDeFreteByCepOrigemAndCepDestino(String cepOrigem, String cepDestino) { return this.tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestino(cepOrigem,cepDestino);}
 
     public void remove(Long id) { tabelaDeFreteRepository.deleteById(id);}
 

@@ -1,6 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.exception;
 
-import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.exception.BussinessErrorException;
+import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.exception.BusinessErrorException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(this.errorReponse);
     }
 
-    @ExceptionHandler(BussinessErrorException.class)
+    @ExceptionHandler(BusinessErrorException.class)
     public ResponseEntity<ErrorDefaultResponse> bussinessError(Exception e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         errorReponse.setTimestamp(Instant.now());

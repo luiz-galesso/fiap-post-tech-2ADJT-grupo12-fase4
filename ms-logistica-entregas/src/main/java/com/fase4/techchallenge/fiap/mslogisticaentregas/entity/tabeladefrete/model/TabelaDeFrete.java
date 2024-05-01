@@ -1,8 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,14 +16,21 @@ import lombok.NoArgsConstructor;
 public class TabelaDeFrete {
 
     @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tabelaDeFrete_generator")
+    @SequenceGenerator(name = "tabelaDeFrete_generator", sequenceName = "tabelaDeFrete_sequence", allocationSize = 1)
     private Long id;
     @NotNull
     private String cepOrigem;
     @NotNull
     private String cepDestino;
     private Double valorFrete;
-    private Long prazoEmHoras;
+    private Long prazoEntregaEmHoras;
 
-
-
+    public TabelaDeFrete(String cepOrigem, String cepDestino, Double valorFrete, Long prazoEntregaEmHoras) {
+        this.cepOrigem = cepOrigem;
+        this.cepDestino = cepDestino;
+        this.valorFrete = valorFrete;
+        this.prazoEntregaEmHoras = prazoEntregaEmHoras;
+    }
 }
