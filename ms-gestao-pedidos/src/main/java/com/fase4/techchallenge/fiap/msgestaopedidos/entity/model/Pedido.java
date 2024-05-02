@@ -18,14 +18,12 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_generator")
     @SequenceGenerator(name = "pedido_generator", sequenceName = "pedido_sequence", allocationSize = 1)
-    private Long id;
+    private Long idPedido;
 
-    private String emailCliente;
+    private Cliente cliente;
 
     @ElementCollection
     private List<Produto> produtos;
-
-    private Endereco endereco;
 
     private double valorPedido;
 
@@ -35,13 +33,17 @@ public class Pedido {
 
     private LocalDateTime dataCriacao;
 
-    public Pedido(String emailCliente, List<Produto> produtos, Endereco endereco, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
-        this.emailCliente = emailCliente;
+    private LocalDateTime dataPagamento;
+
+    private LocalDateTime dataEntrega;
+
+    public Pedido(Cliente cliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
+        this.cliente = cliente;
         this.produtos = produtos;
-        this.endereco = endereco;
         this.valorPedido = valorPedido;
         this.status = status;
         this.meioPagamento = meioPagamento;
         this.dataCriacao = dataCriacao;
     }
+
 }

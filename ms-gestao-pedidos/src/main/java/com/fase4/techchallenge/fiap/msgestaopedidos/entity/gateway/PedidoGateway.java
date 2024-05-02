@@ -1,7 +1,7 @@
 package com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
-import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.repository.PedidoRepository;
+import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.repository.PedidoRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
