@@ -3,10 +3,7 @@ package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.prod
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model.Produto;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoUpdateDTO;
-import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.AtualizarProduto;
-import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.CadastrarProduto;
-import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.ObterProdutoPeloId;
-import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.RemoverProdutoPeloId;
+import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.*;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.BussinessErrorException;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.EntityNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,12 +22,14 @@ public class ProdutoController {
     private final AtualizarProduto atualizarProduto;
     private final ObterProdutoPeloId obterProdutoPeloId;
     private final RemoverProdutoPeloId removerProdutoPeloId;
+    private final AtualizarEstoqueProduto atualizarEstoqueProduto;
 
-    public ProdutoController(CadastrarProduto cadastrarProduto, AtualizarProduto atualizarProduto, ObterProdutoPeloId obterProdutoPeloId, RemoverProdutoPeloId removerProdutoPeloId) {
+    public ProdutoController(CadastrarProduto cadastrarProduto, AtualizarProduto atualizarProduto, ObterProdutoPeloId obterProdutoPeloId, RemoverProdutoPeloId removerProdutoPeloId, AtualizarEstoqueProduto atualizarEstoqueProduto) {
         this.cadastrarProduto = cadastrarProduto;
         this.atualizarProduto = atualizarProduto;
         this.obterProdutoPeloId = obterProdutoPeloId;
         this.removerProdutoPeloId = removerProdutoPeloId;
+        this.atualizarEstoqueProduto = atualizarEstoqueProduto;
     }
 
     @Operation(summary = "Realiza um novo cadastro de produto", description = "Serviço utilizado para cadastro do produto.")
@@ -76,6 +75,18 @@ public class ProdutoController {
         try {
             var produto = removerProdutoPeloId.execute(id);
             return new ResponseEntity<>("Produto Removido", HttpStatus.OK);
+        } catch (BussinessErrorException bussinessErrorException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bussinessErrorException.getMessage());
+        }
+    }
+
+    @Operation(summary = "Retira produto do estoque", description = "Serviço utilizado para alterar o estoque do produto.")
+    @PutMapping(value = "/atualiza-estoque/{id}/{quantidade}", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> retiraEstoque(@PathVariable Long id, @PathVariable Long quantidade) {
+        try {
+            var produtoRetorno = atualizarEstoqueProduto.execute(id, quantidade);
+            return new ResponseEntity<>(produtoRetorno, HttpStatus.ACCEPTED);
         } catch (BussinessErrorException bussinessErrorException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bussinessErrorException.getMessage());
         }
