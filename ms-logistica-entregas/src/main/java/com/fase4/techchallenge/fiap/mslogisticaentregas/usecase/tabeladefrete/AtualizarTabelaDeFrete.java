@@ -14,18 +14,32 @@ import java.util.Optional;
 public class AtualizarTabelaDeFrete {
     private final TabelaDeFreteGateway tabelaDeFreteGateway;
 
-    public TabelaDeFrete execute(Long id, TabelaDeFreteUpdateDTO tabelaDeFreteDTO){
-        Optional<TabelaDeFrete> tabelaDeFreteOptional = tabelaDeFreteGateway.findTabelaDeFreteByCepOrigemAndCepDestino(tabelaDeFreteDTO.getCepOrigem(), tabelaDeFreteDTO.getCepDestino());
+    public TabelaDeFrete execute(Long idEntregador, Long idTabelaFrete, TabelaDeFreteUpdateDTO tabelaDeFreteDTO){
+        Optional<TabelaDeFrete> tabelaDeFreteOptional = tabelaDeFreteGateway.findById(idTabelaFrete);
 
         if (tabelaDeFreteOptional.isEmpty()){
-            throw new BusinessErrorException("Não foi encontrado a tabela de frete cadastrada com a Origem x Destino informada.");
+            throw new BusinessErrorException("Não foi encontrado a tabela de frete cadastrada com o Id informado.");
         }
 
-        TabelaDeFrete tabelaDeFrete = new TabelaDeFrete(id,
+        if (!tabelaDeFreteOptional.get().getEntregador().getId().equals(idEntregador)){
+            throw new BusinessErrorException("Tabela de Frente não pertence ao entregador.");
+        }
+
+        Optional<TabelaDeFrete> outraTabelaExistente = tabelaDeFreteGateway.findTabelaDeFreteByIdEntregadorAndCepOrigemAndCepDestinoAndIdTabelaNot(idEntregador,
+                tabelaDeFreteDTO.getCepOrigem(),
+                tabelaDeFreteDTO.getCepDestino(),
+                idTabelaFrete);
+
+        if (outraTabelaExistente.isPresent()){
+            throw new BusinessErrorException("Já existe outra Tabela de Frente para este entregador com a mesma Origem e Destino.");
+        }
+
+        TabelaDeFrete tabelaDeFrete = new TabelaDeFrete(idTabelaFrete,
                 tabelaDeFreteDTO.getCepOrigem(),
                 tabelaDeFreteDTO.getCepDestino(),
                 tabelaDeFreteDTO.getValorFrete(),
-                tabelaDeFreteDTO.getPrazoEntregaEmHoras());
+                tabelaDeFreteDTO.getPrazoEntregaEmHoras(),
+                tabelaDeFreteOptional.get().getEntregador());
         return this.tabelaDeFreteGateway.update(tabelaDeFrete);
     }
 }

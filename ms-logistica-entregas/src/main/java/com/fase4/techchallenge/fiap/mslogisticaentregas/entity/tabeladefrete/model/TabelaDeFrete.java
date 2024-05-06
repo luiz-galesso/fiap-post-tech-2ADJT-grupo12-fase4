@@ -1,5 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model;
 
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entregador.model.Entregador;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,10 +28,15 @@ public class TabelaDeFrete {
     private Double valorFrete;
     private Long prazoEntregaEmHoras;
 
-    public TabelaDeFrete(String cepOrigem, String cepDestino, Double valorFrete, Long prazoEntregaEmHoras) {
+    @ManyToOne
+    @NotNull
+    private Entregador entregador;
+
+    public TabelaDeFrete(String cepOrigem, String cepDestino, Double valorFrete, Long prazoEntregaEmHoras, Entregador entregador) {
         this.cepOrigem = cepOrigem;
         this.cepDestino = cepDestino;
         this.valorFrete = valorFrete;
         this.prazoEntregaEmHoras = prazoEntregaEmHoras;
+        this.entregador = entregador;
     }
 }
