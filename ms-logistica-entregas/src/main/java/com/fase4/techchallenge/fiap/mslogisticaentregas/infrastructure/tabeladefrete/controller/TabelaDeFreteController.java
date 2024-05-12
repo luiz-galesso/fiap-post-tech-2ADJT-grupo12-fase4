@@ -1,8 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.tabeladefrete.controller;
 
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
-import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.exception.BusinessErrorException;
-import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.exception.EntityNotFoundException;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.tabeladefrete.ObterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.tabeladefrete.ObterTabelaDeFretePeloId;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.tabeladefrete.RemoverTabelaDeFretePeloId;
@@ -23,9 +21,9 @@ public class TabelaDeFreteController {
     private final ObterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis;
     private final RemoverTabelaDeFretePeloId removerTabelaDeFretePeloId;
 
-    public TabelaDeFreteController( ObterTabelaDeFretePeloId obterTabelaDeFretePeloId
-    , ObterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis
-    , RemoverTabelaDeFretePeloId removerTabelaDeFretePeloId) {
+    public TabelaDeFreteController(ObterTabelaDeFretePeloId obterTabelaDeFretePeloId
+            , ObterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis
+            , RemoverTabelaDeFretePeloId removerTabelaDeFretePeloId) {
         this.obterTabelaDeFretePeloId = obterTabelaDeFretePeloId;
         this.obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis = obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis;
         this.removerTabelaDeFretePeloId = removerTabelaDeFretePeloId;
@@ -35,31 +33,23 @@ public class TabelaDeFreteController {
     @GetMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        try {
-            var tabelaDeFrete = obterTabelaDeFretePeloId.execute(id);
-            return new ResponseEntity<>(tabelaDeFrete, HttpStatus.OK);
-        } catch (EntityNotFoundException entityNotFoundException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(entityNotFoundException.getMessage());
-        }
+        var tabelaDeFrete = obterTabelaDeFretePeloId.execute(id);
+        return new ResponseEntity<>(tabelaDeFrete, HttpStatus.OK);
     }
 
     @Operation(summary = "Remove tabela de frete pelo Id", description = "Serviço utilizado para remover uma tabela de frete pelo Id.")
-    @DeleteMapping(value = "/{id}", produces =  "application/json")
+    @DeleteMapping(value = "/{id}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id){
-        try {
-            var removeuTabelaDeFrete = removerTabelaDeFretePeloId.execute(id);
-            return new ResponseEntity<>("Tabela de Frete Removida", HttpStatus.OK);
-        } catch (BusinessErrorException businessErrorException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(businessErrorException.getMessage());
-        }
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        var removeuTabelaDeFrete = removerTabelaDeFretePeloId.execute(id);
+        return new ResponseEntity<>("Tabela de Frete Removida", HttpStatus.OK);
     }
 
     @Operation(summary = "Obter tabelas de frete disponíveis para Origem x Destino", description = "Serviço utilizado para listar as tabelas de frete disponíveis")
     @GetMapping(value = "/cotar", produces = "application/json")
     @Transactional
     public ResponseEntity<?> listarTabelasDeFreteDisponiveisPorRota(@RequestParam("cepOrigem") String cepOrigem, @RequestParam("cepDestino") String cepDestino) {
-        List<TabelaDeFrete> tabelasDisponiveis = this.obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis.execute(cepOrigem,cepDestino);
-        return new ResponseEntity<>(tabelasDisponiveis,HttpStatus.OK);
+        List<TabelaDeFrete> tabelasDisponiveis = this.obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis.execute(cepOrigem, cepDestino);
+        return new ResponseEntity<>(tabelasDisponiveis, HttpStatus.OK);
     }
 }
