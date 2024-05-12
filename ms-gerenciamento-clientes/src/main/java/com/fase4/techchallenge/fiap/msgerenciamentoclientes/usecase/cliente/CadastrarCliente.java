@@ -27,11 +27,10 @@ public class CadastrarCliente {
         Cliente cliente =
                 new Cliente(clienteDTO.getEmail(),
                         clienteDTO.getNome(),
-                        "ATIVO",
                         LocalDateTime.now(),
-                        clienteDTO.getDataNascimento()//,
-                        //clienteDTO.getEndereco()
+                        clienteDTO.getDataNascimento()
                 );
+
         return this.clienteGateway.create(cliente);
     }
 }
