@@ -20,22 +20,22 @@ public class Pedido {
     @SequenceGenerator(name = "pedido_generator", sequenceName = "pedido_sequence", allocationSize = 1)
     private Long idPedido;
 
+    private String status;
+
+    private String meioPagamento;
+
+    private double valorPedido;
+
     private Cliente cliente;
 
     @ElementCollection
     private List<Produto> produtos;
 
-    private double valorPedido;
-
-    private String status;
-
-    private String meioPagamento;
-
-    private LocalDateTime dataCriacao;
-
     private LocalDateTime dataPagamento;
 
     private LocalDateTime dataEntrega;
+
+    private LocalDateTime dataCriacao;
 
     public Pedido(Cliente cliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
         this.cliente = cliente;

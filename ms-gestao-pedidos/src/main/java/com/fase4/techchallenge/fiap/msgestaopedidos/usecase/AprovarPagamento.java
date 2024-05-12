@@ -23,15 +23,21 @@ public class AprovarPagamento {
             throw new BussinessErrorException("Pedido Informado não Cadastrado.");
         }
 
+        if (pedidoOptional.get().getStatus().equalsIgnoreCase("PAGAMENTO_APROVADO")) {
+            throw new BussinessErrorException("Pedido já Pago.");
+        } else if (pedidoOptional.get().getStatus().equalsIgnoreCase("ENTREGUE")) {
+            throw new BussinessErrorException("Pedido já Entregue.");
+        }
+
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                pedidoOptional.get().getCliente(),
-                pedidoOptional.get().getProdutos(),
-                pedidoOptional.get().getValorPedido(),
                 PedidoStatus.PAGAMENTO_APROVADO.toString(),
                 pedidoOptional.get().getMeioPagamento(),
-                pedidoOptional.get().getDataCriacao(),
+                pedidoOptional.get().getValorPedido(),
+                pedidoOptional.get().getCliente(),
+                pedidoOptional.get().getProdutos(),
                 LocalDateTime.now(),
-                null);
+                null,
+                pedidoOptional.get().getDataCriacao());
 
         return this.pedidoGateway.update(pedido);
     }

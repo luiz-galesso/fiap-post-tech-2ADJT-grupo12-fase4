@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Produto {
 
-    private long id;
-    private int quantidade;
+    private long codProduto;
+    private long quantidade;
 
 }

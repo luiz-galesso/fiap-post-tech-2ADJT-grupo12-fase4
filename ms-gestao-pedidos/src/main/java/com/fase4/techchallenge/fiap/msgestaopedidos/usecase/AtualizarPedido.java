@@ -13,6 +13,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AtualizarPedido {
     private final PedidoGateway pedidoGateway;
+    private final CallApiProdutos callApiProdutos;
 
     public Pedido execute(Long id, PedidoUpdateDTO pedidoUpdateDTO) {
 
@@ -22,16 +23,26 @@ public class AtualizarPedido {
             throw new BussinessErrorException("Pedido Informado não Cadastrado.");
         }
 
+        if (!pedidoUpdateDTO.produtos().equals(pedidoOptional.get().getProdutos())) {
+            callApiProdutos.validaProdutoAjustaEstoque(pedidoUpdateDTO.produtos());
+        }
+
+        if (pedidoUpdateDTO.meioPagamento() != pedidoOptional.get().getMeioPagamento() &&
+                !pedidoOptional.get().getStatus().equalsIgnoreCase("GERADO")) {
+            throw new BussinessErrorException("Não pode ser alterado o meio de Pagamento do Pedido. Status:" + pedidoOptional.get().getStatus());
+        }
+
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                pedidoOptional.get().getCliente(),
-                pedidoUpdateDTO.produtos(),
-                pedidoUpdateDTO.valorPedido(),
                 pedidoOptional.get().getStatus(),
                 pedidoUpdateDTO.meioPagamento(),
-                pedidoOptional.get().getDataCriacao(),
+                pedidoUpdateDTO.valorPedido(),
+                pedidoOptional.get().getCliente(),
+                pedidoUpdateDTO.produtos(),
                 null,
-                null);
+                null,
+                pedidoOptional.get().getDataCriacao());
 
         return this.pedidoGateway.update(pedido);
     }
+
 }

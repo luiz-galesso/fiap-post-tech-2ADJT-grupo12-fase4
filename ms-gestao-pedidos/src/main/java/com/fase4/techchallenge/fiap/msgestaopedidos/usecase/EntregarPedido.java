@@ -23,15 +23,21 @@ public class EntregarPedido {
             throw new BussinessErrorException("Pedido Informado não Cadastrado.");
         }
 
+        if (pedidoOptional.get().getStatus().equalsIgnoreCase("GERADO")) {
+            throw new BussinessErrorException("Pedido não foi Pago.");
+        } else if (pedidoOptional.get().getStatus().equalsIgnoreCase("ENTREGUE")) {
+            throw new BussinessErrorException("Pedido já Entregue.");
+        }
+
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                pedidoOptional.get().getCliente(),
-                pedidoOptional.get().getProdutos(),
-                pedidoOptional.get().getValorPedido(),
                 PedidoStatus.ENTREGUE.toString(),
                 pedidoOptional.get().getMeioPagamento(),
-                pedidoOptional.get().getDataCriacao(),
+                pedidoOptional.get().getValorPedido(),
+                pedidoOptional.get().getCliente(),
+                pedidoOptional.get().getProdutos(),
                 pedidoOptional.get().getDataPagamento(),
-                LocalDateTime.now());
+                LocalDateTime.now(),
+                pedidoOptional.get().getDataCriacao());
 
         return this.pedidoGateway.update(pedido);
     }
