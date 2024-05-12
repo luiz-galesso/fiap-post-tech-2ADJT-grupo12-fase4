@@ -4,7 +4,6 @@ import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.utils.ProdutoHelper;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -25,7 +24,6 @@ public class CadastrarProdutoIT
 
     @Test
     void devePermitirCadastrarProduto() {
-
         //arrange
         ProdutoInsertDTO produtoDTO = ProdutoHelper.gerarProduto();
 
@@ -36,9 +34,6 @@ public class CadastrarProdutoIT
         assertThat(resultado).isNotNull().isInstanceOf(Produto.class);
         assertThat(resultado.getCodProduto()).isNotNull();
         assertThat(resultado.getDataAtualizacao()).isNotNull();
-
-
-
     }
 
 }

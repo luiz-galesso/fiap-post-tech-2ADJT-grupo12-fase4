@@ -25,4 +25,14 @@ public class ProdutoHelper {
                 LocalDateTime.now());
     }
 
+    public static Produto produtoGerado(ProdutoInsertDTO pDTO, Long id) {
+        return new Produto(
+                id,
+                pDTO.descricaoProduto(),
+                pDTO.marca(),
+                pDTO.categoria(),
+                pDTO.quantidade(),
+                LocalDateTime.now());
+    }
+
 }

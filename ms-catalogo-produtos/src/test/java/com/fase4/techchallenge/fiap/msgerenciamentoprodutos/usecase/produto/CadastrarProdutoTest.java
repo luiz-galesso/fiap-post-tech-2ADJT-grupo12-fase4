@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.assertj.core.api.InstanceOfAssertFactories.LOCAL_DATE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +34,6 @@ public class CadastrarProdutoTest
 
     @Test
     void devePermitirCadastrarProduto() {
-
         //arrange
         ProdutoInsertDTO produtoDTO = gerarProduto();
         when(cadastrarProduto.execute(any(ProdutoInsertDTO.class))).thenReturn(produtoGerado(produtoDTO));
@@ -47,6 +45,5 @@ public class CadastrarProdutoTest
         assertThat(resultado).isNotNull().isInstanceOf(Produto.class);
         assertThat(resultado.getDescricaoProduto()).isEqualTo(produtoDTO.descricaoProduto());
         assertThat(resultado.getDataAtualizacao()).isNotNull();
-
     }
 }
