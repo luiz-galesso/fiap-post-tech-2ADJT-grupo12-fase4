@@ -55,7 +55,7 @@ services:
     ports:
       - "8081:8080"
     depends_on:
-      - -db-produto
+      - db-produto
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto

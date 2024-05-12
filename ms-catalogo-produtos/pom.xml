@@ -65,6 +65,14 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>4.1.0</version>
 		</dependency>
+
+		<!-- h2 for test -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
