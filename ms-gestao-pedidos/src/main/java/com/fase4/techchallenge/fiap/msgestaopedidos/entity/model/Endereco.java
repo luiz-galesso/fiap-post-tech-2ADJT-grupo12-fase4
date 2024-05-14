@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {
+
+    private Integer id;
 
     private String logradouro;
 

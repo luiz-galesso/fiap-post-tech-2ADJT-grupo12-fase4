@@ -7,7 +7,7 @@ import java.util.List;
 public record PedidoInsertDTO(
         String emailCliente,
         Integer idEndereco,
-        double valorPedido,
+        double valorFrete,
         String meioPagamento,
         List<Produto> produtos
 ) {

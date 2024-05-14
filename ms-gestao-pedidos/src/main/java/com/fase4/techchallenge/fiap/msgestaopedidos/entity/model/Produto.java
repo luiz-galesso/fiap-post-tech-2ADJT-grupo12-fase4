@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Produto {
 
     private long id;
-    private int quantidade;
+    private long quantidade;
+    private double valorUnitario;
 
 }

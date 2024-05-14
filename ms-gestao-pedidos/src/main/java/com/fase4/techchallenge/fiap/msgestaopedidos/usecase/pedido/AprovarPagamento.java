@@ -1,4 +1,4 @@
-package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
+package com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.enums.PedidoStatus;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class EntregarPedido {
+public class AprovarPagamento {
     private final PedidoGateway pedidoGateway;
 
     public Pedido execute(Long id) {
@@ -24,15 +24,17 @@ public class EntregarPedido {
         }
 
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                pedidoOptional.get().getCliente(),
+                pedidoOptional.get().getEmailCliente(),
+                pedidoOptional.get().getIdEnderecoCliente(),
                 pedidoOptional.get().getProdutos(),
                 pedidoOptional.get().getValorPedido(),
-                PedidoStatus.ENTREGUE.toString(),
+                PedidoStatus.PAGAMENTO_APROVADO.toString(),
                 pedidoOptional.get().getMeioPagamento(),
                 pedidoOptional.get().getDataCriacao(),
-                pedidoOptional.get().getDataPagamento(),
-                LocalDateTime.now());
+                LocalDateTime.now(),
+                null);
 
         return this.pedidoGateway.update(pedido);
     }
+
 }
