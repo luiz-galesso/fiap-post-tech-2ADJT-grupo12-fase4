@@ -19,9 +19,13 @@ public class CadastrarEntregador {
         if (entregadorOptional.isPresent()) {
             throw new BusinessErrorException("Já existe um entregador com o cnpj informado");
         }
+
+        if ((entregadorInsertDTO.getQuantidadeRecursosDisponiveis().compareTo(0L) <= 0)) {
+            throw new BusinessErrorException("Quantidade de Recursos deve ser maior que zero");
+        }
         Entregador entregador = new Entregador(entregadorInsertDTO.getNome(),
                 entregadorInsertDTO.getCnpj(),
-                entregadorInsertDTO.getSituacao(),
+                "ATIVO",
                 entregadorInsertDTO.getQuantidadeRecursosDisponiveis());
         return this.entregadorGateway.create(entregador);
 
