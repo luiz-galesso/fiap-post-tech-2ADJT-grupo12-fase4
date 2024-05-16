@@ -26,9 +26,6 @@ public class Entrega {
     private Long id;
     @NotNull
     private Long idPedido;
-    @ManyToOne
-    @NotNull
-    private Entregador entregador;
     @NotNull
     @ManyToOne
     private TabelaDeFrete tabelaDeFrete;
