@@ -2,7 +2,6 @@ package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entrega.model;
 
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entrega.enums.SituacaoEntrega;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entregador.model.Entregador;
-import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
