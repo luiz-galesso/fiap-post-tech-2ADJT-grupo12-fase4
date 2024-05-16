@@ -3,6 +3,7 @@ package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.exception.BussinessErrorException;
+import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.RemoverPedidoPeloId;
 import com.fase4.techchallenge.fiap.msgestaopedidos.utils.PedidoHelper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,10 @@ class RemoverPedidoPeloIdIT {
 
     @Test
     void devePermitirRemoverPedido() {
-        long id = 1;
         Pedido pedido = PedidoHelper.gerarPedido();
         pedidoGateway.create(pedido);
 
-        var retorno = removerPedidoPeloId.execute(id);
+        var retorno = removerPedidoPeloId.execute(pedido.getIdPedido());
         assertThat(retorno).isTrue();
     }
 

@@ -12,17 +12,14 @@ import java.util.List;
 public class PedidoHelper {
     public static Pedido gerarPedido() {
         List<Produto> produtos = new ArrayList<>();
-        produtos.add(new Produto(1,1));
+        produtos.add(new Produto(1,1,10.00));
 
         return Pedido.builder()
                 .status("GERADO")
                 .meioPagamento("PIX")
                 .valorPedido(200.00)
-                .cliente(Cliente.builder()
-                        .email("johnwick@gmail.com")
-                        .nome("John Wick")
-                        .endereco(new Endereco("Rua 25 de Março","25","Sé","AP25",2525252L,"São Paulo","SP","proximo a estação da Sé"))
-                        .build())
+                .emailCliente("john@email.com")
+                .idEnderecoCliente(1)
                 .produtos(produtos)
                 .dataPagamento(null)
                 .dataEntrega(null)

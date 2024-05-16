@@ -23,19 +23,22 @@ public class Pedido {
     @SequenceGenerator(name = "pedido_generator", sequenceName = "pedido_sequence", allocationSize = 1)
     private Long idPedido;
 
-    private String status;
+    private String emailCliente;
 
-    @NotNull(message = "Deve ser informado o Meio de Pagamento.")
-    private String meioPagamento;
+    private Integer idEnderecoCliente;
+
+    @ElementCollection
+    private List<Produto> produtos;
 
     @NotNull(message = "Deve ser informado o Valor do Pedido.")
     private double valorPedido;
 
-    @NotNull(message = "Deve ser informado o Cliente do Pedido.")
-    private Cliente cliente;
+    private double valorFrete;
 
-    @ElementCollection
-    private List<Produto> produtos;
+    private String status;
+
+    @NotNull(message = "Deve ser informado o Meio de Pagamento.")
+    private String meioPagamento;
 
     private LocalDateTime dataPagamento;
 
@@ -43,8 +46,9 @@ public class Pedido {
 
     private LocalDateTime dataCriacao;
 
-    public Pedido(Cliente cliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
-        this.cliente = cliente;
+    public Pedido(String emailCliente, Integer idEnderecoCliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
+        this.emailCliente = emailCliente;
+        this.idEnderecoCliente = idEnderecoCliente;
         this.produtos = produtos;
         this.valorPedido = valorPedido;
         this.status = status;

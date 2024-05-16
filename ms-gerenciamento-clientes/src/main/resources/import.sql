@@ -1,0 +1,11 @@
+INSERT INTO TB_CLIENTE (EMAIL, NOME, DATA_NASCIMENTO, DATA_REGISTRO) VALUES ('joao.silva@example.com', 'João da Silva', '1990-05-15', '2024-03-18 12:00:00');
+INSERT INTO TB_CLIENTE (EMAIL, NOME, DATA_NASCIMENTO, DATA_REGISTRO) VALUES ('maria.santos@example.com', 'Maria dos Santos', '1985-09-20', '2024-03-18 12:05:00');
+INSERT INTO TB_CLIENTE (EMAIL, NOME, DATA_NASCIMENTO, DATA_REGISTRO) VALUES ('pedro.almeida@example.com', 'Pedro Almeida', '1988-03-10', '2024-03-18 12:10:00');
+INSERT INTO TB_CLIENTE (EMAIL, NOME, DATA_NASCIMENTO, DATA_REGISTRO) VALUES ('ana.ferreira@example.com', 'Ana Ferreira', '1992-11-25', '2024-03-18 12:15:00');
+INSERT INTO TB_CLIENTE (EMAIL, NOME, DATA_NASCIMENTO, DATA_REGISTRO) VALUES ('carlos.souza@example.com', 'Carlos Souza', '1980-07-03', '2024-03-18 12:20:00');
+
+INSERT INTO TB_ENDERECO (ID, CLIENTE_EMAIL, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, REFERENCIA ) VALUES (1001, 'joao.silva@example.com', 'Rua das Flores', '123', 'Apto 101', 'Centro', 30140010, 'Belo Horizonte', 'MG', 'Próximo à Praça Central');
+INSERT INTO TB_ENDERECO (ID, CLIENTE_EMAIL, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, REFERENCIA ) VALUES (1002, 'joao.silva@example.com', 'Avenida Brasil', '456', 'Casa 2', 'Jardim América', 01430000, 'São Paulo', 'SP', 'Perto do Parque Ibirapuera');
+INSERT INTO TB_ENDERECO (ID, CLIENTE_EMAIL, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, REFERENCIA ) VALUES (1003, 'pedro.almeida@example.com', 'Rua do Comércio', '789', 'Sala 3', 'Centro', 20040008, 'Rio de Janeiro', 'RJ', 'Ao lado da Estação de Metrô');
+INSERT INTO TB_ENDERECO (ID, CLIENTE_EMAIL, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, REFERENCIA ) VALUES (1004, 'pedro.almeida@example.com', 'Rua das Palmeiras', '246', 'Apto 202', 'Jardim Botânico', 40170115, 'Salvador', 'BA', 'Próximo à Praia de Ondina');
+INSERT INTO TB_ENDERECO (ID, CLIENTE_EMAIL, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, REFERENCIA ) VALUES (1005, 'carlos.souza@example.com', 'Avenida Paulista', '555', 'Conjunto 1010', 'Bela Vista', 01310100, 'São Paulo', 'SP', 'Próximo ao MASP');

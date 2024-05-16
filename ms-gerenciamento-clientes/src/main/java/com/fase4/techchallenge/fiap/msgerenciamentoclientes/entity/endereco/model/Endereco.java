@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class Endereco {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_generator")
+  @SequenceGenerator(name = "endereco_generator", sequenceName = "endereco_sequence", allocationSize = 1)
   private Integer id;
 
   @ManyToOne

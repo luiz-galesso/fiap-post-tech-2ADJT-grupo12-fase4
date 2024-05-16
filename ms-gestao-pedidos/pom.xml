@@ -55,7 +55,12 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<scope>teste</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>4.1.0</version>
 		</dependency>
 		<!-- Testes -->
 		<dependency>
@@ -88,7 +93,6 @@
 		</dependency>
 		<!-- Testes -->
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

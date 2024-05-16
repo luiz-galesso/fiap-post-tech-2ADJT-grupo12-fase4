@@ -3,6 +3,7 @@ package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.exception.BussinessErrorException;
+import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.AprovarPagamento;
 import com.fase4.techchallenge.fiap.msgestaopedidos.utils.PedidoHelper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,7 @@ class AprovarPagamentoIT {
 
         assertThatThrownBy(() -> aprovarPagamento.execute(pedido.getIdPedido()))
                 .isInstanceOf(BussinessErrorException.class)
-                .hasMessage("Pedido já Pago.");
+                .hasMessage("Pedido Pago.");
     }
 
     @Test
@@ -68,6 +69,6 @@ class AprovarPagamentoIT {
 
         assertThatThrownBy(() -> aprovarPagamento.execute(pedido.getIdPedido()))
                 .isInstanceOf(BussinessErrorException.class)
-                .hasMessage("Pedido já Entregue.");
+                .hasMessage("Pedido Entregue.");
     }
 }

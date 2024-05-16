@@ -3,6 +3,7 @@ package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.exception.EntityNotFoundException;
+import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.ObterPedidoPeloId;
 import com.fase4.techchallenge.fiap.msgestaopedidos.utils.PedidoHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

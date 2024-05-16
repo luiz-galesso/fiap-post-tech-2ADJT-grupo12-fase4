@@ -3,6 +3,7 @@ package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.exception.EntityNotFoundException;
+import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.ObterPedidoPeloId;
 import com.fase4.techchallenge.fiap.msgestaopedidos.utils.PedidoHelper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -25,14 +26,13 @@ class ObterPedidoPeloIdIT {
 
     @Test
     void devePermitirBuscarPedido() {
-        long id = 1;
         Pedido pedido = PedidoHelper.gerarPedido();
         pedidoGateway.create(pedido);
-        var pedidoRetornado = obterPedidoPeloId.execute(id);
+        var pedidoRetornado = obterPedidoPeloId.execute(pedido.getIdPedido());
 
         assertThat(pedidoRetornado).isInstanceOf(Pedido.class);
         assertThat(pedidoRetornado).isNotNull();
-        assertThat(pedidoRetornado.getIdPedido()).isNotNull().isEqualTo(id);
+        assertThat(pedidoRetornado.getIdPedido()).isNotNull();
         assertThat(pedidoRetornado).isEqualTo(pedido);
     }
 

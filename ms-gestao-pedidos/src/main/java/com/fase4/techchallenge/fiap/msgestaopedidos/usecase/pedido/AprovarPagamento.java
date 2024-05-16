@@ -1,4 +1,4 @@
-package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
+package com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.enums.PedidoStatus;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class EntregarPedido {
+public class AprovarPagamento {
     private final PedidoGateway pedidoGateway;
 
     public Pedido execute(Long id) {
@@ -23,22 +23,25 @@ public class EntregarPedido {
             throw new BussinessErrorException("Pedido Informado não Cadastrado.");
         }
 
-        if (pedidoOptional.get().getStatus().equalsIgnoreCase("GERADO")) {
-            throw new BussinessErrorException("Pedido não foi Pago.");
-        } else if (pedidoOptional.get().getStatus().equalsIgnoreCase("ENTREGUE")) {
-            throw new BussinessErrorException("Pedido já Entregue.");
+        if (pedidoOptional.get().getStatus().equalsIgnoreCase("ENTREGUE")) {
+            throw new BussinessErrorException("Pedido Entregue.");
+        } else if (!pedidoOptional.get().getStatus().equalsIgnoreCase("GERADO")) {
+            throw new BussinessErrorException("Pedido Pago.");
         }
 
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                PedidoStatus.ENTREGUE.toString(),
-                pedidoOptional.get().getMeioPagamento(),
-                pedidoOptional.get().getValorPedido(),
-                pedidoOptional.get().getCliente(),
+                pedidoOptional.get().getEmailCliente(),
+                pedidoOptional.get().getIdEnderecoCliente(),
                 pedidoOptional.get().getProdutos(),
-                pedidoOptional.get().getDataPagamento(),
+                pedidoOptional.get().getValorPedido(),
+                pedidoOptional.get().getValorFrete(),
+                PedidoStatus.PAGAMENTO_APROVADO.toString(),
+                pedidoOptional.get().getMeioPagamento(),
+                pedidoOptional.get().getDataCriacao(),
                 LocalDateTime.now(),
-                pedidoOptional.get().getDataCriacao());
+                null);
 
         return this.pedidoGateway.update(pedido);
     }
+
 }
