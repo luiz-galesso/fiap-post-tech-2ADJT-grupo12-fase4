@@ -1,7 +1,9 @@
 package com.fase4.techchallenge.fiap.msgestaopedidos.entity.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_pedido")
 @Data
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pedido {
@@ -20,16 +23,22 @@ public class Pedido {
     @SequenceGenerator(name = "pedido_generator", sequenceName = "pedido_sequence", allocationSize = 1)
     private Long idPedido;
 
-    private String status;
+    private String emailCliente;
 
-    private String meioPagamento;
-
-    private double valorPedido;
-
-    private Cliente cliente;
+    private Integer idEnderecoCliente;
 
     @ElementCollection
     private List<Produto> produtos;
+
+    @NotNull(message = "Deve ser informado o Valor do Pedido.")
+    private double valorPedido;
+
+    private double valorFrete;
+
+    private String status;
+
+    @NotNull(message = "Deve ser informado o Meio de Pagamento.")
+    private String meioPagamento;
 
     private LocalDateTime dataPagamento;
 
@@ -37,8 +46,9 @@ public class Pedido {
 
     private LocalDateTime dataCriacao;
 
-    public Pedido(Cliente cliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
-        this.cliente = cliente;
+    public Pedido(String emailCliente, Integer idEnderecoCliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
+        this.emailCliente = emailCliente;
+        this.idEnderecoCliente = idEnderecoCliente;
         this.produtos = produtos;
         this.valorPedido = valorPedido;
         this.status = status;

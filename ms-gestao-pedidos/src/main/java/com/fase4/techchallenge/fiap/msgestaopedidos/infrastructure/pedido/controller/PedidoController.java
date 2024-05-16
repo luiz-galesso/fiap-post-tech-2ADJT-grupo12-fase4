@@ -3,7 +3,7 @@ package com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.contr
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
 import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.controller.dto.PedidoInsertDTO;
 import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.controller.dto.PedidoUpdateDTO;
-import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.*;
+import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -24,6 +24,7 @@ public class PedidoController {
     private final RemoverPedidoPeloId removerPedidoPeloId;
     private final AprovarPagamento aprovarPagamento;
     private final EntregarPedido entregarPedido;
+    private final ObtemPedidosPeloCliente obtemPedidosPeloCliente;
 
     @Operation(summary = "Realiza o cadastro de um novo Pedido", description = "Serviço utilizado para cadastro do Pedido.")
     @PostMapping(produces = "application/json")
@@ -73,4 +74,11 @@ public class PedidoController {
         return new ResponseEntity<>(pedidoRetorno, HttpStatus.ACCEPTED);
     }
 
+    @Operation(summary = "Obtem todos pedidos de um cliente", description = "Serviço utilizado para obter todos pedidos de um cliente.")
+    @GetMapping(value = "/cliente/{email}", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> obtemPedidosPeloCliente(@PathVariable String email) {
+        var pedidos = obtemPedidosPeloCliente.execute(email);
+        return new ResponseEntity<>(pedidos, HttpStatus.OK);
+    }
 }

@@ -1,4 +1,4 @@
-package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
+package com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
@@ -13,8 +13,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AtualizarPedido {
     private final PedidoGateway pedidoGateway;
-    private final CallApiProdutos callApiProdutos;
-
     public Pedido execute(Long id, PedidoUpdateDTO pedidoUpdateDTO) {
 
         Optional<Pedido> pedidoOptional = pedidoGateway.findById(id);
@@ -23,24 +21,22 @@ public class AtualizarPedido {
             throw new BussinessErrorException("Pedido Informado não Cadastrado.");
         }
 
-        if (!pedidoUpdateDTO.produtos().equals(pedidoOptional.get().getProdutos())) {
-            callApiProdutos.validaProdutoAjustaEstoque(pedidoUpdateDTO.produtos());
-        }
-
         if (pedidoUpdateDTO.meioPagamento() != pedidoOptional.get().getMeioPagamento() &&
                 !pedidoOptional.get().getStatus().equalsIgnoreCase("GERADO")) {
             throw new BussinessErrorException("Não pode ser alterado o meio de Pagamento do Pedido. Status:" + pedidoOptional.get().getStatus());
         }
 
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
+                pedidoOptional.get().getEmailCliente(),
+                pedidoOptional.get().getIdEnderecoCliente(),
+                pedidoUpdateDTO.produtos(),
+                pedidoUpdateDTO.valorPedido(),
+                pedidoOptional.get().getValorFrete(),
                 pedidoOptional.get().getStatus(),
                 pedidoUpdateDTO.meioPagamento(),
-                pedidoUpdateDTO.valorPedido(),
-                pedidoOptional.get().getCliente(),
-                pedidoUpdateDTO.produtos(),
+                pedidoOptional.get().getDataCriacao(),
                 null,
-                null,
-                pedidoOptional.get().getDataCriacao());
+                null);
 
         return this.pedidoGateway.update(pedido);
     }

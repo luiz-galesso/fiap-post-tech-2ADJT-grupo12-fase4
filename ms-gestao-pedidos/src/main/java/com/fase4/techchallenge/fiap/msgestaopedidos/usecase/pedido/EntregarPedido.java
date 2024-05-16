@@ -1,4 +1,4 @@
-package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
+package com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.enums.PedidoStatus;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class AprovarPagamento {
+public class EntregarPedido {
     private final PedidoGateway pedidoGateway;
 
     public Pedido execute(Long id) {
@@ -23,23 +23,24 @@ public class AprovarPagamento {
             throw new BussinessErrorException("Pedido Informado não Cadastrado.");
         }
 
-        if (pedidoOptional.get().getStatus().equalsIgnoreCase("PAGAMENTO_APROVADO")) {
-            throw new BussinessErrorException("Pedido já Pago.");
-        } else if (pedidoOptional.get().getStatus().equalsIgnoreCase("ENTREGUE")) {
-            throw new BussinessErrorException("Pedido já Entregue.");
+        if (pedidoOptional.get().getStatus().equalsIgnoreCase("ENTREGUE")) {
+            throw new BussinessErrorException("Pedido Entregue.");
+        } else if (!pedidoOptional.get().getStatus().equalsIgnoreCase("EM_TRANSPORTE")) {
+            throw new BussinessErrorException("Pedido não está em Transporte.");
         }
 
         Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                PedidoStatus.PAGAMENTO_APROVADO.toString(),
-                pedidoOptional.get().getMeioPagamento(),
-                pedidoOptional.get().getValorPedido(),
-                pedidoOptional.get().getCliente(),
+                pedidoOptional.get().getEmailCliente(),
+                pedidoOptional.get().getIdEnderecoCliente(),
                 pedidoOptional.get().getProdutos(),
-                LocalDateTime.now(),
-                null,
-                pedidoOptional.get().getDataCriacao());
+                pedidoOptional.get().getValorPedido(),
+                pedidoOptional.get().getValorFrete(),
+                PedidoStatus.ENTREGUE.toString(),
+                pedidoOptional.get().getMeioPagamento(),
+                pedidoOptional.get().getDataCriacao(),
+                pedidoOptional.get().getDataPagamento(),
+                LocalDateTime.now());
 
         return this.pedidoGateway.update(pedido);
     }
-
 }
