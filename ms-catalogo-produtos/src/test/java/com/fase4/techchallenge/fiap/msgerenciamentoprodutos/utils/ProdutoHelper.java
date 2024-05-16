@@ -19,6 +19,15 @@ public class ProdutoHelper {
         );
     }
 
+    public static ProdutoInsertDTO gerarProduto(String descricao) {
+        return new ProdutoInsertDTO(
+                descricao,
+                "Samsung",
+                "Telefones",
+                50L
+        );
+    }
+
     public static Produto produtoGerado(ProdutoInsertDTO pDTO) {
         return new Produto(
                 pDTO.descricaoProduto(),
