@@ -10,7 +10,10 @@ import java.util.List;
 
 @FeignClient(name = "produtos", url = "${feign.ms-catalogo-produtos.url}")
 public interface ProdutosClient {
-    @RequestMapping(method = RequestMethod.PUT, value = "/produtos/estoque-massivo")
+    @RequestMapping(method = RequestMethod.PUT, value = "/produtos/estoque-massivo/consumo")
     void consomeEstoques(@RequestBody List<ProdutoEstoqueDTO> produtoEstoqueList);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/produtos/estoque-massivo/aumento")
+    void aumentaEstoques(@RequestBody List<ProdutoEstoqueDTO> produtoEstoqueList);
 
 }

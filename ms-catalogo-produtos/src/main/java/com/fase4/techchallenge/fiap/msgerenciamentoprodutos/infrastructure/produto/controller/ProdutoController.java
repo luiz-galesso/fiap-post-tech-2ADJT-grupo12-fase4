@@ -7,8 +7,6 @@ import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produ
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoUpdateDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.util.DefaultResponse;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.*;
-import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.BussinessErrorException;
-import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.exception.EntityNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -33,6 +31,7 @@ public class ProdutoController {
     private final AumentaEstoqueProduto aumentaEstoqueProduto;
     private final ConsomeEstoqueProduto consomeEstoqueProduto;
     private final ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
+    private final AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
 
     @Operation(summary = "Realiza um novo cadastro de produto", description = "Serviço utilizado para cadastro do produto.")
     @PostMapping(produces = "application/json")
@@ -83,10 +82,18 @@ public class ProdutoController {
     }
 
     @Operation(summary = "Consome estoques massivamente", description = "Serviço utilizado para consumir o estoque de varios produtos de forma simultanea.")
-    @PutMapping(value = "/estoque-massivo", produces = "application/json")
+    @PutMapping(value = "/estoque-massivo/consumo", produces = "application/json")
     @Transactional
     public ResponseEntity<?> consomeEstoques(@RequestBody List<ProdutoEstoqueDTO> produtoEstoqueList) {
          consomeEstoquesMassivamente.execute(produtoEstoqueList);
-         return new ResponseEntity<> (new DefaultResponse(Instant.now(),"OK","Estoques consumidos com sucesso."), HttpStatus.OK);
+         return new ResponseEntity<> (new DefaultResponse(Instant.now(),"OK","Estoques consumidos com sucesso."), HttpStatus.ACCEPTED);
+    }
+
+    @Operation(summary = "Aumenta estoques massivamente", description = "Serviço utilizado para aumentar o estoque de varios produtos de forma simultanea.")
+    @PutMapping(value = "/estoque-massivo/aumento", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> aumentaEstoques(@RequestBody List<ProdutoEstoqueDTO> produtoEstoqueList) {
+        aumentaEstoquesMassivamente.execute(produtoEstoqueList);
+        return new ResponseEntity<> (new DefaultResponse(Instant.now(),"OK","Estoques foram aumentados com sucesso."), HttpStatus.ACCEPTED);
     }
 }

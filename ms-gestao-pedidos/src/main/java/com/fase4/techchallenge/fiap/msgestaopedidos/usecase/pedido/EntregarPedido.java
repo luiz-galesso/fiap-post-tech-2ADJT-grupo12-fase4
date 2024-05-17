@@ -17,22 +17,10 @@ public class EntregarPedido {
 
     public Pedido execute(Long id) {
 
-        Optional<Pedido> pedidoOptional = pedidoGateway.findById(id);
+        Pedido pedido = pedidoGateway.findById(id).orElseThrow(() -> new BussinessErrorException("Pedido Informado não Cadastrado."));
 
-        if (pedidoOptional.isEmpty()) {
-            throw new BussinessErrorException("Pedido Informado não Cadastrado.");
-        }
-
-        Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                pedidoOptional.get().getEmailCliente(),
-                pedidoOptional.get().getIdEnderecoCliente(),
-                pedidoOptional.get().getProdutos(),
-                pedidoOptional.get().getValorPedido(),
-                PedidoStatus.ENTREGUE.toString(),
-                pedidoOptional.get().getMeioPagamento(),
-                pedidoOptional.get().getDataCriacao(),
-                pedidoOptional.get().getDataPagamento(),
-                LocalDateTime.now());
+        pedido.setStatus(PedidoStatus.ENTREGUE.toString());
+        pedido.setDataEntrega(LocalDateTime.now());
 
         return this.pedidoGateway.update(pedido);
     }

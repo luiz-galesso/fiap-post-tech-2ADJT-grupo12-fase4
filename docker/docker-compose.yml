@@ -84,6 +84,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-pedido:5432/db-pedido
       SPRING_DATASOURCE_USERNAME: dbpedido
       SPRING_DATASOURCE_PASSWORD: passdbpedido
+      MSGERENCIAMENTOCLIENTES_URL: http://ms-gerenciamento-clientes:8080/ms-gerenciamento-clientes/
+      MSCATALOGOPRODUTOS_URL: http://ms-catalogo-produtos:8080/ms-catalogo-produtos/
+      MSLOGISTICAENTREGAS_URL: http://ms-logistica-entregas:8080/ms-logistica-entregas/
 
   ms-logistica-entregas:
     container_name: ms-logistica-entregas

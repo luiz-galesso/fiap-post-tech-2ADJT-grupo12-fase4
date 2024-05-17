@@ -3,6 +3,7 @@ package com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.clie
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.model.Cliente;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.cliente.controller.dto.ClienteInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.cliente.controller.dto.ClienteUpdateDTO;
+import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.util.DefaultResponse;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.AtualizarCliente;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.CadastrarCliente;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.ObterClientePeloId;
@@ -13,6 +14,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/clientes")
@@ -60,6 +63,6 @@ public class ClienteController {
     @Transactional
     public ResponseEntity<?> delete(@PathVariable String id) {
          removerClientePeloId.execute(id);
-         return new ResponseEntity<>("Cliente Removido", HttpStatus.OK);
+         return new ResponseEntity<>(new DefaultResponse(Instant.now(),"Cliente Removido","OK"), HttpStatus.OK);
     }
 }

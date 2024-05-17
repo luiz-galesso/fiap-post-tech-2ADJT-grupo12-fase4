@@ -16,22 +16,12 @@ public class AtualizarPedido {
 
     public Pedido execute(Long id, PedidoUpdateDTO pedidoUpdateDTO) {
 
-        Optional<Pedido> pedidoOptional = pedidoGateway.findById(id);
+        Pedido pedido = pedidoGateway.findById(id).orElseThrow(() -> new BussinessErrorException("Pedido Informado não Cadastrado."));
 
-        if (pedidoOptional.isEmpty()) {
-            throw new BussinessErrorException("Pedido Informado não Cadastrado.");
-        }
-
-        Pedido pedido = new Pedido(pedidoOptional.get().getIdPedido(),
-                pedidoOptional.get().getEmailCliente(),
-                pedidoOptional.get().getIdEnderecoCliente(),
-                pedidoUpdateDTO.produtos(),
-                pedidoUpdateDTO.valorPedido(),
-                pedidoOptional.get().getStatus(),
-                pedidoUpdateDTO.meioPagamento(),
-                pedidoOptional.get().getDataCriacao(),
-                null,
-                null);
+        pedido.setProdutos(pedidoUpdateDTO.produtos());
+        pedido.setValorPedido(pedidoUpdateDTO.valorPedido());
+        pedido.setValorFrete(pedidoUpdateDTO.valorFrete());
+        pedido.setMeioPagamento(pedidoUpdateDTO.meioPagamento());
 
         return this.pedidoGateway.update(pedido);
     }

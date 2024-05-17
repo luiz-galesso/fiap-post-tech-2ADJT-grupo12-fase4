@@ -8,6 +8,8 @@ public record PedidoUpdateDTO(
         String emailCliente,
         Integer idEndereco,
         double valorPedido,
+
+        double valorFrete,
         String meioPagamento,
         List<Produto> produtos
 ) {

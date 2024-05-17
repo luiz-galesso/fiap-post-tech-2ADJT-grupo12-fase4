@@ -59,7 +59,7 @@ public class PedidoController {
     }
 
     @Operation(summary = "Muda o Status do Pedido para Pagamento Aprovado", description = "Serviço utilizado para alterar o status do Pedido para Pagamento Aprovado.")
-    @PutMapping(value = "/aprova-pagamento/{idPedido}", produces = "application/json")
+    @PutMapping(value = "/{idPedido}/aprovacao-pagamento", produces = "application/json")
     @Transactional
     public ResponseEntity<?> updateStatusPago(@PathVariable Long idPedido) {
         var pedidoRetorno = aprovarPagamento.execute(idPedido);
@@ -67,7 +67,7 @@ public class PedidoController {
     }
 
     @Operation(summary = "Muda o Status do Pedido para Entregue", description = "Serviço utilizado para alterar o status do Pedido para Entregue.")
-    @PutMapping(value = "/entrega-pedido/{idPedido}", produces = "application/json")
+    @PutMapping(value = "/{idPedido}/confirmacao-entrega", produces = "application/json")
     @Transactional
     public ResponseEntity<?> updateStatusEntregue(@PathVariable Long idPedido) {
         var pedidoRetorno = entregarPedido.execute(idPedido);
