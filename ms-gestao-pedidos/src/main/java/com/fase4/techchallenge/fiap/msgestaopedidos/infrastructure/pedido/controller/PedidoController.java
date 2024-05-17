@@ -25,6 +25,7 @@ public class PedidoController {
     private final AprovarPagamento aprovarPagamento;
     private final EntregarPedido entregarPedido;
     private final ObtemPedidosPeloCliente obtemPedidosPeloCliente;
+    private final CancelaPedido cancelaPedido;
 
     @Operation(summary = "Realiza o cadastro de um novo Pedido", description = "Serviço utilizado para cadastro do Pedido.")
     @PostMapping(produces = "application/json")
@@ -80,5 +81,13 @@ public class PedidoController {
     public ResponseEntity<?> obtemPedidosPeloCliente(@PathVariable String email) {
         var pedidos = obtemPedidosPeloCliente.execute(email);
         return new ResponseEntity<>(pedidos, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Muda o status do pedido para Cancelado", description = "Serviço utilizado para mudar o status do pedido para cancelado.")
+    @PutMapping(value = "/{idPedido}/cancelamento", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> obtemPedidosPeloCliente(@PathVariable Long idPedido) {
+        var pedidos = cancelaPedido.execute(idPedido);
+        return new ResponseEntity<>(pedidos, HttpStatus.ACCEPTED);
     }
 }

@@ -22,7 +22,7 @@ public class Pedido {
 
     private String emailCliente;
 
-    private Integer idEnderecoCliente;
+    private Endereco endereco;
 
     @ElementCollection
     private List<Produto> produtos;
@@ -41,9 +41,9 @@ public class Pedido {
 
     private LocalDateTime dataEntrega;
 
-    public Pedido(String emailCliente, Integer idEnderecoCliente, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
+    public Pedido(String emailCliente, Endereco endereco, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
         this.emailCliente = emailCliente;
-        this.idEnderecoCliente = idEnderecoCliente;
+        this.endereco = endereco;
         this.produtos = produtos;
         this.valorPedido = valorPedido;
         this.status = status;

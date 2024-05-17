@@ -1,0 +1,1 @@
+INSERT INTO TB_ORIGEM (ID, LOGRADOURO, NUMERO, BAIRRO, COMPLEMENTO, CEP, CIDADE, ESTADO, REFERENCIA) VALUES (1, 'Avenida dos Elefantes', '2345','Jardim central', null, 9370390, 'São Paulo', 'SP', null);

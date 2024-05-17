@@ -35,4 +35,8 @@ public class PedidoGateway {
     public List<Pedido> findByEmailCliente(String email) {
         return this.pedidoRepository.findByEmailCliente(email);
     }
+
+    public List<Pedido> findByStatus(String status) {
+        return this.pedidoRepository.findByStatus(status);
+    }
 }

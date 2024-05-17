@@ -45,7 +45,7 @@ public class CadastrarPedido {
         consomeEstoques.execute(produtoEstoqueList);
 
         Pedido pedido = new Pedido(cliente.getEmail(),
-                pedidoInsertDTO.idEndereco(),
+                endereco,
                 pedidoInsertDTO.produtos(),
                 valorTotalPedido[0],
                 PedidoStatus.GERADO.toString(),

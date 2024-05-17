@@ -1,6 +1,5 @@
-package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.origem.model;
+package com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.feign.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "tb_origem")
-public class Origem {
-
-    @Id
-    private Long id;
+public class EnderecoDestinoDTO {
 
     private String logradouro;
 
@@ -32,4 +26,3 @@ public class Origem {
     private String referencia;
 
 }
-

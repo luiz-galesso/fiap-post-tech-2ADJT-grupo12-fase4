@@ -1,20 +1,19 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.origem.gateway;
 
-import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entregador.model.Entregador;
-import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.entregador.repository.EntregadorRepository;
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.origem.model.Origem;
+import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.origem.repository.OrigemRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class OrigemGateway {
+
     private final OrigemRepository origemRepository;
 
-    public OrigemGateway(EntregadorRepository entregadorRepository) {
-        this.origemRepository = entregadorRepository;
-    }
-
-    public Optional<Entregador> findById(Long id) { return this.origemRepository.findById(id);}
+    public Optional<Origem> findById(Long id) { return this.origemRepository.findById(id);}
 
 
 }

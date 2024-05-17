@@ -1,5 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.entrega.controller;
 
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entrega.model.Entrega;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entregador.model.Entregador;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.entrega.controller.dto.EntregaInsertDTO;
@@ -34,28 +35,18 @@ public class EntregaController {
     private final DesalocarRecursoEntregador desalocarRecursoEntregador;
     private final CadastrarTabelaDeFrete cadastrarTabelaDeFrete;
     private final AtualizarTabelaDeFrete atualizarTabelaDeFrete;
-    private final ObterTabelaDeFretePeloIdEntregador obterTabelaDeFretePeloIdEntregador;
+    private final ObterTabelaDeFretePeloIdEntregador obterTabelaDeFretePeloIdEntregador;*/
 
-    public EntregaController(CadastrarEntregador cadastrarEntregador, AtualizarEntregador atualizarEntregador, ObterEntregadorPeloId obterEntregadorPeloId, AlocarRecursoEntregador alocarRecursoEntregador, DesalocarRecursoEntregador desalocarRecursoEntregador, CadastrarTabelaDeFrete cadastrarTabelaDeFrete, AtualizarTabelaDeFrete atualizarTabelaDeFrete, ObterTabelaDeFretePeloIdEntregador obterTabelaDeFretePeloIdEntregador) {
-        this.cadastrarEntregador = cadastrarEntregador;
-        this.atualizarEntregador = atualizarEntregador;
-        this.obterEntregadorPeloId = obterEntregadorPeloId;
-        this.alocarRecursoEntregador = alocarRecursoEntregador;
-        this.desalocarRecursoEntregador = desalocarRecursoEntregador;
-        this.cadastrarTabelaDeFrete = cadastrarTabelaDeFrete;
-        this.atualizarTabelaDeFrete = atualizarTabelaDeFrete;
-        this.obterTabelaDeFretePeloIdEntregador = obterTabelaDeFretePeloIdEntregador;
-    }
 
-    @Operation(summary = "Realiza o cadastro de um entregador", description = "Serviço utilizado para cadastro de Entregador")
+    @Operation(summary = "Realiza o cadastro de um entrega", description = "Serviço utilizado para cadastro de Entrega")
     @PostMapping(produces = "application/json")
     @Transactional
-    public ResponseEntity<?> create(@RequestBody EntregaInsertDTO entregadorInsertDTO) {
-        Entregador entregador = cadastrarEntregador.execute(entregadorInsertDTO);
-        return new ResponseEntity<>(entregador, HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody EntregaInsertDTO entregaInsertDTO) {
+        Entrega entrega = cadastraEntrega.execute(entregaInsertDTO);
+        return new ResponseEntity<>(entrega, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Alterar os dados do entregador", description = "Serviço utilizado para alterar os dados de entregador.")
+    /*@Operation(summary = "Alterar os dados do entregador", description = "Serviço utilizado para alterar os dados de entregador.")
     @PutMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody EntregaUpdateDTO entregadorUpdateDTO) {

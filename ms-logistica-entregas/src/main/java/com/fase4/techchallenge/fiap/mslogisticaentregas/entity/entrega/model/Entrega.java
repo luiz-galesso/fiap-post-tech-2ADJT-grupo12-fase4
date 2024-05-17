@@ -25,12 +25,20 @@ public class Entrega {
     private Long id;
     @NotNull
     private Long idPedido;
+
     @ManyToOne
-    @NotNull
+    //@NotNull
     private Entregador entregador;
+
     @NotNull
+    private String emailCliente;
+
+    @NotNull
+    private String nomeCliente;
+
+    //@NotNull
     private Long prazoEntregaEmHoras;
-    @NotNull
+    //@NotNull
     private Double valorFrete;
 
     private String idRastreio;
@@ -72,6 +80,6 @@ public class Entrega {
     private LocalDateTime dataSituacaoEntrega;
 
     private String descritivoLocalizacao;
-    @NotNull
+
     private String nomeRecebedor;
 }

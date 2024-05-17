@@ -3,11 +3,15 @@ package com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.entrega.
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 public class EntregaInsertDTO {
-    private String nome;
-    private Long cnpj;
-    private String situacao;
-    private Long quantidadeRecursosDisponiveis;
+
+    private Long idPedido;
+    private String emailCliente;
+    private EnderecoDestinoDTO enderecoDestino;
+    private LocalDateTime dataCriacao;
+
 }
