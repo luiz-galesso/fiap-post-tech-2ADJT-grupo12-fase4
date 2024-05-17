@@ -12,9 +12,9 @@ public class OpenAPIConfiguration {
     public OpenAPI myOpenAPI() {
 
         Info info = new Info()
-                .title("MS-GERENCIAMENTO-PRODUTOS")
+                .title("MS-CATALOGO-PRODUTOS")
                 .version("1.0.0")
-                .description("Microserviço para gerenciamento de produtos");
+                .description("Microserviço para catalogo de produtos");
 
         return new OpenAPI().info(info);
     }
