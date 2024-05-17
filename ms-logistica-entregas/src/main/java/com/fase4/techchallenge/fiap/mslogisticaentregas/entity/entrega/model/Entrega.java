@@ -35,8 +35,29 @@ public class Entrega {
 
     private String idRastreio;
     @NotNull
+    @AttributeOverrides({
+            @AttributeOverride(name="logradouro",column = @Column(name="origemLogradouro")),
+            @AttributeOverride(name="numero",column = @Column(name="origemNumero")),
+            @AttributeOverride(name="bairro",column = @Column(name="origemBairro")),
+            @AttributeOverride(name="complemento",column = @Column(name="origemComplemento")),
+            @AttributeOverride(name="cep",column = @Column(name="origemCep")),
+            @AttributeOverride(name="cidade",column = @Column(name="origemCidade")),
+            @AttributeOverride(name="estado",column = @Column(name="origemEstado")),
+            @AttributeOverride(name="referencia",column = @Column(name="origemReferencia"))
+    })
     private Endereco enderecoOrigem;
+
     @NotNull
+    @AttributeOverrides({
+            @AttributeOverride(name="logradouro",column = @Column(name="destinoLogradouro")),
+            @AttributeOverride(name="numero",column = @Column(name="destinoNumero")),
+            @AttributeOverride(name="bairro",column = @Column(name="destinoBairro")),
+            @AttributeOverride(name="complemento",column = @Column(name="destinoComplemento")),
+            @AttributeOverride(name="cep",column = @Column(name="destinoCep")),
+            @AttributeOverride(name="cidade",column = @Column(name="destinoCidade")),
+            @AttributeOverride(name="estado",column = @Column(name="destinoEstado")),
+            @AttributeOverride(name="referencia",column = @Column(name="destinoReferencia"))
+    })
     private Endereco enderecoDestino;
 
     @NotNull
