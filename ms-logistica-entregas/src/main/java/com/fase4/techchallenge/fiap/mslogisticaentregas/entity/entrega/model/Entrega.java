@@ -32,20 +32,24 @@ public class Entrega {
     private Long prazoEntregaEmHoras;
     @NotNull
     private Double valorFrete;
+
     private String idRastreio;
     @NotNull
     private Endereco enderecoOrigem;
     @NotNull
     private Endereco enderecoDestino;
+
     @NotNull
     private LocalDateTime dataPedido;
     @NotNull
     private LocalDateTime dataRegistro;
+
     private LocalDateTime dataPrevisao;
     @NotNull
     private SituacaoEntrega situacaoEntrega;
     @NotNull
     private LocalDateTime dataSituacaoEntrega;
+
     private String descritivoLocalizacao;
     @NotNull
     private String nomeRecebedor;
