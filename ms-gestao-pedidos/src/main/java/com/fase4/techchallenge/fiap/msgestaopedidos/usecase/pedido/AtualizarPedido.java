@@ -31,7 +31,7 @@ public class AtualizarPedido {
                 pedidoOptional.get().getIdEnderecoCliente(),
                 pedidoUpdateDTO.produtos(),
                 pedidoUpdateDTO.valorPedido(),
-                pedidoOptional.get().getValorFrete(),
+                pedidoUpdateDTO.valorFrete(),
                 pedidoOptional.get().getStatus(),
                 pedidoUpdateDTO.meioPagamento(),
                 pedidoOptional.get().getDataCriacao(),

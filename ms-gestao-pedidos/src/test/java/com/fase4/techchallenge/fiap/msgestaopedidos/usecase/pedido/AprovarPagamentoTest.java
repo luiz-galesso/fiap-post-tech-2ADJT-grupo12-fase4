@@ -1,9 +1,10 @@
-package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
+package com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
 import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.controller.dto.PedidoInsertDTO;
 import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.controller.dto.PedidoUpdateDTO;
+import com.fase4.techchallenge.fiap.msgestaopedidos.infrastructure.pedido.repository.PedidoRepository;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.exception.BussinessErrorException;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.AprovarPagamento;
 import com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido.CadastrarPedido;
@@ -17,8 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -42,20 +45,22 @@ class AprovarPagamentoTest {
         openMocks.close();
     }
 
-    /*
     @Test
     void devePermitirAprovarPagamentoPedido() {
         Pedido pedido = PedidoHelper.gerarPedido();
-        pedidoGateway.create(pedido);
+        pedido.setIdPedido(1L);
 
-        when(pedidoGateway.findById(pedido.getIdPedido())).thenReturn(Optional.of(pedido));
-        when(pedidoGateway.update(pedido)).thenReturn((pedido));
+        when(pedidoGateway.findById(any(Long.class))).thenReturn(Optional.of(pedido));
+        when(pedidoGateway.update(any(Pedido.class))).thenReturn(pedido);
+
         var pedidoRetornado = aprovarPagamento.execute(pedido.getIdPedido());
+        pedidoRetornado.setStatus("PAGAMENTO_APROVADO");
 
-        assertThat(pedidoRetornado).isInstanceOf(Pedido.class);
-        assertThat(pedidoRetornado.getDataPagamento()).isNotNull();
+        assertThat(pedidoRetornado).isNotNull();
+        assertThat(pedidoRetornado.getIdPedido()).isEqualTo(pedido.getIdPedido());
         assertThat(pedidoRetornado.getStatus()).isEqualToIgnoringCase("PAGAMENTO_APROVADO");
         verify(pedidoGateway, times(1)).findById(any(Long.class));
+        verify(pedidoGateway, times(1)).update(any(Pedido.class));
     }
 
     @Test
@@ -67,6 +72,7 @@ class AprovarPagamentoTest {
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Pedido Informado não Cadastrado.");
         verify(pedidoGateway, times(1)).findById(any(Long.class));
+        verify(pedidoGateway, never()).update(any(Pedido.class));
     }
 
     @Test
@@ -75,14 +81,15 @@ class AprovarPagamentoTest {
         pedido.setIdPedido(10L);
         pedido.setStatus("PAGAMENTO_APROVADO");
         pedido.setDataPagamento(LocalDateTime.now());
-        pedidoGateway.create(pedido);
 
-        when(pedidoGateway.findById(pedido.getIdPedido())).thenReturn(Optional.empty());
+        when(pedidoGateway.findById(any(Long.class))).thenReturn(Optional.of(pedido));
+        when(pedidoGateway.update(any(Pedido.class))).thenReturn(pedido);
 
         assertThatThrownBy(() -> aprovarPagamento.execute(pedido.getIdPedido()))
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Pedido Pago.");
         verify(pedidoGateway, times(1)).findById(any(Long.class));
+        verify(pedidoGateway, never()).update(any(Pedido.class));
     }
 
     @Test
@@ -92,13 +99,14 @@ class AprovarPagamentoTest {
         pedido.setStatus("ENTREGUE");
         pedido.setDataPagamento(LocalDateTime.now());
         pedido.setDataEntrega(LocalDateTime.now());
-        pedidoGateway.create(pedido);
 
-        when(pedidoGateway.findById(pedido.getIdPedido())).thenReturn(Optional.empty());
+        when(pedidoGateway.findById(any(Long.class))).thenReturn(Optional.of(pedido));
+        when(pedidoGateway.update(any(Pedido.class))).thenReturn(pedido);
 
         assertThatThrownBy(() -> aprovarPagamento.execute(pedido.getIdPedido()))
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Pedido Entregue.");
         verify(pedidoGateway, times(1)).findById(any(Long.class));
-    }*/
+        verify(pedidoGateway, never()).update(any(Pedido.class));
+    }
 }

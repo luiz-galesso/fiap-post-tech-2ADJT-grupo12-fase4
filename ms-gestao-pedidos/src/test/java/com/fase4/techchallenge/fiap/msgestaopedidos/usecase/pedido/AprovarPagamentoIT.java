@@ -1,4 +1,4 @@
-package com.fase4.techchallenge.fiap.msgestaopedidos.usecase;
+package com.fase4.techchallenge.fiap.msgestaopedidos.usecase.pedido;
 
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.gateway.PedidoGateway;
 import com.fase4.techchallenge.fiap.msgestaopedidos.entity.model.Pedido;
@@ -28,10 +28,9 @@ class AprovarPagamentoIT {
 
     @Test
     void devePermitirAprovarPagamentoPedido() {
-        long id = 1;
         Pedido pedido = PedidoHelper.gerarPedido();
         pedidoGateway.create(pedido);
-        var pedidoRetornado = aprovarPagamento.execute(id);
+        var pedidoRetornado = aprovarPagamento.execute(pedido.getIdPedido());
 
         assertThat(pedidoRetornado).isInstanceOf(Pedido.class);
         assertThat(pedidoRetornado.getDataPagamento()).isNotNull();
