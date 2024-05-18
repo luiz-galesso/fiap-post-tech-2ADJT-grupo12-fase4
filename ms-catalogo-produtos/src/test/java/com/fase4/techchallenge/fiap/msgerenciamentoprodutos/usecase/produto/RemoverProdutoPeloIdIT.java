@@ -41,7 +41,7 @@ public class RemoverProdutoPeloIdIT
     @Test
     void deveGerarExcecao_QuandoProdutoNaoExistir() {
         //arrange
-        Produto produto = produtoGerado(gerarProduto(), 1L);
+        Produto produto = produtoGerado(gerarProduto(), 1010L);
 
         //assert
         assertThatThrownBy(() -> removerProdutoPeloId.execute(produto.getCodProduto())).

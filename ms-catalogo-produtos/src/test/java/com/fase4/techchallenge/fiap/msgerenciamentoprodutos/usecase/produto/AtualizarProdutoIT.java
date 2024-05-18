@@ -46,7 +46,7 @@ public class AtualizarProdutoIT
     void deveGerarExcecao_QuandoProdutoNaoEncontrado() {
         //assert
         assertThatThrownBy(() -> atualizarProduto
-                .execute(1L, gerarProdutoUpdate(gerarProduto())))
+                .execute(1010L, gerarProdutoUpdate(gerarProduto())))
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Não foi encontrado o produto cadastrado com o identificador informado.");
     }
