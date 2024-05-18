@@ -102,6 +102,19 @@ services:
       MSGERENCIAMENTOCLIENTES_URL: http://ms-gerenciamento-clientes:8080/ms-gerenciamento-clientes/
       MSGESTAOPEDIDOS_URL: http://ms-gestao-pedidos:8080/ms-gestao-pedidos/
 
+  ms-catalogo-produtos-batch:
+    container_name: ms-catalogo-produtos-batch
+    build: ../ms-gerenciamento-produtos-batch/.
+    depends_on:
+      - db-produto
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
+      SPRING_DATASOURCE_USERNAME: dbproduto
+      SPRING_DATASOURCE_PASSWORD: passdbproduto
+    volumes:
+      - ./volumes/produtos-batch-dados:/app/dados
+
+
   adminer:
     image: adminer
     container_name: adminer
