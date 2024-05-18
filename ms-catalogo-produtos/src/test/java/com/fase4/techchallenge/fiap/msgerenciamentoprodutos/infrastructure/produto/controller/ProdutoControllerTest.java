@@ -1,6 +1,8 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller;
 
+import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.gateway.ProdutoGateway;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model.Produto;
+import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.EstoqueDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoUpdateDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.*;
@@ -14,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Optional;
+
 import static com.fase4.techchallenge.fiap.msgerenciamentoprodutos.utils.ProdutoHelper.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -23,39 +27,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProdutoControllerTest {
 
     @Mock
-    private CadastrarProduto cadastrarProduto;
+    CadastrarProduto cadastrarProduto;
 
     @Mock
-    private AtualizarProduto atualizarProduto;
+    AtualizarProduto atualizarProduto;
 
     @Mock
-    private ObterProdutoPeloId obterProdutoPeloId;
+    ObterProdutoPeloId obterProdutoPeloId;
 
     @Mock
-    private RemoverProdutoPeloId removerProdutoPeloId;
+    RemoverProdutoPeloId removerProdutoPeloId;
 
     @Mock
-    private AumentaEstoqueProduto aumentaEstoqueProduto;
+    AumentaEstoqueProduto aumentaEstoqueProduto;
+
     @Mock
-    private ConsomeEstoqueProduto consomeEstoqueProduto;
+    ConsomeEstoqueProduto consomeEstoqueProduto;
+
     @Mock
-    private ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
+    ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
+
     @Mock
-    private AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
+    AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
+
+    @Mock
+    ProdutoGateway produtoGateway;
 
 
     MockMvc mockMvc;
 
     AutoCloseable mock;
-
-//    private final CadastrarProduto cadastrarProduto;
-//    private final AtualizarProduto atualizarProduto;
-//    private final ObterProdutoPeloId obterProdutoPeloId;
-//    private final RemoverProdutoPeloId removerProdutoPeloId;
-//    private final AumentaEstoqueProduto aumentaEstoqueProduto;
-//    private final ConsomeEstoqueProduto consomeEstoqueProduto;
-//    private final ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
-//    private final AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
 
     @BeforeEach
     void setup() {
@@ -144,5 +145,55 @@ public class ProdutoControllerTest {
 
         //assert
         verify(removerProdutoPeloId, times(1)).execute(any(Long.class));
+    }
+
+    @Test
+    void devePermitirAumentarEstoqueDeUmProduto() throws Exception {
+        //arrange
+        Produto produto = produtoGerado(gerarProduto(), 1L);
+        when(produtoGateway.findById(1L)).thenReturn(Optional.of(produto));
+        when(aumentaEstoqueProduto.execute(
+                any(java.lang.Long.class),
+                any(java.lang.Long.class)
+        )).thenReturn(produto);
+        when(aumentaEstoqueProduto
+                .execute(any(Long.class), any(Long.class))).thenReturn(produto);
+
+        EstoqueDTO estoqueDTO = new EstoqueDTO(10L);
+
+        //act
+        mockMvc.perform(
+                put("/produtos/{id}/aumenta-estoque", 1L)
+                        .content(asJsonString(estoqueDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+
+        //assert
+        verify(aumentaEstoqueProduto, times(1)).execute(any(Long.class), any(Long.class));
+    }
+
+    @Test
+    void devePermitirConsumirEstoqueDeUmProduto() throws Exception {
+        //arrange
+        Produto produto = produtoGerado(gerarProduto(), 1L);
+        when(produtoGateway.findById(1L)).thenReturn(Optional.of(produto));
+        when(consomeEstoqueProduto.execute(
+                any(java.lang.Long.class),
+                any(java.lang.Long.class)
+        )).thenReturn(produto);
+        when(consomeEstoqueProduto
+                .execute(any(Long.class), any(Long.class))).thenReturn(produto);
+
+        EstoqueDTO estoqueDTO = new EstoqueDTO(10L);
+
+        //act
+        mockMvc.perform(
+                put("/produtos/{id}/consome-estoque", 1L)
+                        .content(asJsonString(estoqueDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+
+        //assert
+        verify(consomeEstoqueProduto, times(1)).execute(any(Long.class), any(Long.class));
     }
 }

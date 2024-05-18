@@ -1,6 +1,7 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller;
 
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model.Produto;
+import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.EstoqueDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.usecase.produto.*;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
@@ -83,5 +84,35 @@ public class ProdutoControllerIT
                 .delete("/ms-gerenciamento-produtos/produtos/{id}", produto.getCodProduto())
         .then()
                 .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void devePermitirAumentarEstoqueDeUmProduto(){
+        Produto produto = cadastrarProduto.execute(gerarProduto());
+        EstoqueDTO estoqueDTO = new EstoqueDTO(10L);
+
+        given()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(estoqueDTO)
+        .when()
+            .put("/ms-gerenciamento-produtos/produtos/{id}/aumenta-estoque", produto.getCodProduto())
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"));
+    }
+
+    @Test
+    void devePermitirConsumirEstoqueDeUmProduto(){
+        Produto produto = cadastrarProduto.execute(gerarProduto());
+        EstoqueDTO estoqueDTO = new EstoqueDTO(10L);
+
+        given()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(estoqueDTO)
+        .when()
+            .put("/ms-gerenciamento-produtos/produtos/{id}/consome-estoque", produto.getCodProduto())
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"));
     }
 }
