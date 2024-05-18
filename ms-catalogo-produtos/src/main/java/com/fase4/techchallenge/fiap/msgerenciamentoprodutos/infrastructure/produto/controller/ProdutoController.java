@@ -45,13 +45,8 @@ public class ProdutoController {
     @PutMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProdutoUpdateDTO produtoUpdateDTO) {
-<<<<<<< HEAD
          var produtoRetorno = atualizarProduto.execute(id, produtoUpdateDTO);
          return new ResponseEntity<>(produtoRetorno, HttpStatus.ACCEPTED);
-=======
-        var produtoRetorno = atualizarProduto.execute(id, produtoUpdateDTO);
-        return new ResponseEntity<>(produtoRetorno, HttpStatus.ACCEPTED);
->>>>>>> remotes/origin/feature/micro-servico-produto-batch
     }
 
     @Operation(summary = "Busca o produto pelo Id", description = "Serviço utilizado para buscar o produto pelo Id.")
@@ -66,27 +61,16 @@ public class ProdutoController {
     @DeleteMapping(value = "/{id}", produces = "application/json")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id) {
-<<<<<<< HEAD
          var produto = removerProdutoPeloId.execute(id);
          return new ResponseEntity<>(new DefaultResponse(Instant.now(),"OK","Produto removido."), HttpStatus.OK);
-=======
-        var produto = removerProdutoPeloId.execute(id);
-        return new ResponseEntity<>("Produto Removido", HttpStatus.OK);
->>>>>>> remotes/origin/feature/micro-servico-produto-batch
     }
 
     @Operation(summary = "Aumenta o estoque de um produto", description = "Serviço utilizado para aumentar o estoque de um produto.")
     @PutMapping(value = "/{id}/aumenta-estoque", produces = "application/json")
     @Transactional
-<<<<<<< HEAD
     public ResponseEntity<?> aumentaEstoque(@PathVariable Long id, @RequestBody EstoqueDTO estoque) {
         var produto = aumentaEstoqueProduto.execute(id, estoque.quantidade());
         return new ResponseEntity<>(produto, HttpStatus.OK);
-=======
-    public ResponseEntity<?> retiraEstoque(@PathVariable Long id, @PathVariable Long quantidade) {
-        var produtoRetorno = atualizarEstoqueProduto.execute(id, quantidade);
-        return new ResponseEntity<>(produtoRetorno, HttpStatus.ACCEPTED);
->>>>>>> remotes/origin/feature/micro-servico-produto-batch
     }
 
     @Operation(summary = "Consome o estoque de um produto", description = "Serviço utilizado para consumir o estoque de um produto.")
