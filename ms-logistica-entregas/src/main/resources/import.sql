@@ -1,0 +1,1 @@
+insert into tb_entregador (cnpj,nome,quantidade_recursos_disponiveis,situacao,id) values (52123949000183,'Rapidão Entregas',8, 'ATIVO',NEXT VALUE FOR entregador_sequence);
