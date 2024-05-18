@@ -35,11 +35,27 @@ public class ProdutoControllerTest {
     private RemoverProdutoPeloId removerProdutoPeloId;
 
     @Mock
-    private AtualizarEstoqueProduto atualizarEstoqueProduto;
+    private AumentaEstoqueProduto aumentaEstoqueProduto;
+    @Mock
+    private ConsomeEstoqueProduto consomeEstoqueProduto;
+    @Mock
+    private ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
+    @Mock
+    private AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
+
 
     MockMvc mockMvc;
 
     AutoCloseable mock;
+
+//    private final CadastrarProduto cadastrarProduto;
+//    private final AtualizarProduto atualizarProduto;
+//    private final ObterProdutoPeloId obterProdutoPeloId;
+//    private final RemoverProdutoPeloId removerProdutoPeloId;
+//    private final AumentaEstoqueProduto aumentaEstoqueProduto;
+//    private final ConsomeEstoqueProduto consomeEstoqueProduto;
+//    private final ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
+//    private final AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
 
     @BeforeEach
     void setup() {
@@ -49,7 +65,10 @@ public class ProdutoControllerTest {
                 atualizarProduto,
                 obterProdutoPeloId,
                 removerProdutoPeloId,
-                atualizarEstoqueProduto
+                aumentaEstoqueProduto,
+                consomeEstoqueProduto,
+                consomeEstoquesMassivamente,
+                aumentaEstoquesMassivamente
         );
         mockMvc = MockMvcBuilders.standaloneSetup(produtoController)
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
