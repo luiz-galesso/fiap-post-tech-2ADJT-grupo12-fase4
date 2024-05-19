@@ -46,6 +46,7 @@ public class Pedido {
         this.endereco = endereco;
         this.produtos = produtos;
         this.valorPedido = valorPedido;
+        this.valorFrete = valorFrete;
         this.status = status;
         this.meioPagamento = meioPagamento;
         this.dataCriacao = dataCriacao;

@@ -56,7 +56,7 @@ class EntregadorGatewayTest {
     void devePermitirAlterarEntregador() {
         Entregador entregadorDesatualizado = EntregadorHelper.gerarEntregador(1L);
         var entregadorAtualizado = EntregadorHelper.gerarEntregador(1L);
-        entregadorAtualizado.setNome("Jardins Grill Prime");
+        entregadorAtualizado.setNome("Trovão Entregas");
 
         when(entregadorRepository.findById(any(Long.class)))
                 .thenReturn(Optional.of(entregadorDesatualizado));

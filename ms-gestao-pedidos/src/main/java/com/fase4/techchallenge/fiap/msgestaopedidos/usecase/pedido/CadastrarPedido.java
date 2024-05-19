@@ -48,6 +48,7 @@ public class CadastrarPedido {
                 endereco,
                 pedidoInsertDTO.produtos(),
                 valorTotalPedido[0],
+                pedidoInsertDTO.valorFrete(),
                 PedidoStatus.GERADO.toString(),
                 pedidoInsertDTO.meioPagamento(),
                 LocalDateTime.now());

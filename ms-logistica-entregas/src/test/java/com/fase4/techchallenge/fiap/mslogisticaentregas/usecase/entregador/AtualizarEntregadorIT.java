@@ -52,13 +52,13 @@ public class AtualizarEntregadorIT {
         @Test
         void deveGerarExcecaoSeNaoEncontrarEntregador() {
 
-            var entregadorDesatualizado = EntregadorHelper.gerarEntregador(1L);
+            var entregadorDesatualizado = EntregadorHelper.gerarEntregador(100L);
             var entregadorUpdateDTO = new EntregadorUpdateDTO(entregadorDesatualizado.getNome()
                     , entregadorDesatualizado.getCnpj()
                     , entregadorDesatualizado.getSituacao()
             );
 
-            assertThatThrownBy(() -> atualizarEntregador.execute(1L, entregadorUpdateDTO))
+            assertThatThrownBy(() -> atualizarEntregador.execute(100L, entregadorUpdateDTO))
                     .isInstanceOf(BusinessErrorException.class)
                     .message().isEqualTo("Não foi encontrado o entregador com o Id informado");
         }
