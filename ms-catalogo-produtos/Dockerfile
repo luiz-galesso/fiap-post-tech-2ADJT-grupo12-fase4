@@ -1,7 +1,8 @@
 FROM maven:latest as build
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+#RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 FROM openjdk:latest 
 VOLUME /tmp
