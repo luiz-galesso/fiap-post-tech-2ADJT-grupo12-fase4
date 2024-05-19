@@ -1,7 +1,9 @@
 package com.fase4.techchallenge.fiap.msgestaopedidos.entity.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_pedido")
 @Data
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pedido {
@@ -27,21 +30,21 @@ public class Pedido {
     @ElementCollection
     private List<Produto> produtos;
 
+    @NotNull(message = "Deve ser informado o Valor do Pedido.")
     private double valorPedido;
 
     private double valorFrete;
 
     private String status;
 
+    @NotNull(message = "Deve ser informado o Meio de Pagamento.")
     private String meioPagamento;
-
-    private LocalDateTime dataCriacao;
 
     private LocalDateTime dataPagamento;
 
     private LocalDateTime dataEntrega;
 
-    public Pedido(String emailCliente, Endereco endereco, List<Produto> produtos, double valorPedido, String status, String meioPagamento, LocalDateTime dataCriacao) {
+    public Pedido(String emailCliente, Endereco endereco, List<Produto> produtos, double valorPedido, double valorFrete, String status, String meioPagamento, LocalDateTime dataCriacao) {
         this.emailCliente = emailCliente;
         this.endereco = endereco;
         this.produtos = produtos;

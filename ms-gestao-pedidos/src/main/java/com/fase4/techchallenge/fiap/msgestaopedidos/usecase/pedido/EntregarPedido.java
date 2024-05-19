@@ -19,6 +19,12 @@ public class EntregarPedido {
 
         Pedido pedido = pedidoGateway.findById(id).orElseThrow(() -> new BussinessErrorException("Pedido Informado não Cadastrado."));
 
+        if (pedido.getStatus().equalsIgnoreCase("ENTREGUE")) {
+            throw new BussinessErrorException("Pedido Entregue.");
+        } else if (!pedido.getStatus().equalsIgnoreCase("EM_TRANSPORTE")) {
+            throw new BussinessErrorException("Pedido não está em Transporte.");
+        }
+        
         pedido.setStatus(PedidoStatus.ENTREGUE.toString());
         pedido.setDataEntrega(LocalDateTime.now());
 
