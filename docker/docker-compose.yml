@@ -106,7 +106,7 @@ services:
     container_name: ms-catalogo-produtos-batch
     build: ../ms-gerenciamento-produtos-batch/.
     depends_on:
-      - db-produto
+      - ms-catalogo-produtos
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto
