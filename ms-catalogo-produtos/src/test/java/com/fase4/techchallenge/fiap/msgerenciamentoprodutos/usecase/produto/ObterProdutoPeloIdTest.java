@@ -55,7 +55,7 @@ public class ObterProdutoPeloIdTest
                 .when(obterProdutoPeloId).execute(any(Long.class));
 
         //assert
-        assertThatThrownBy(() -> obterProdutoPeloId.execute(1L))
+        assertThatThrownBy(() -> obterProdutoPeloId.execute(2L))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Produto não localizado");
     }

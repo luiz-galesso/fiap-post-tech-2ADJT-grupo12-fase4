@@ -41,7 +41,7 @@ public class ObterProdutoPeloIdIT
     @Test
     void deveGerarExcecao_QuandoOProdutoNaoForEncontrado() {
         //assert
-        assertThatThrownBy(() -> obterProdutoPeloId.execute(1L))
+        assertThatThrownBy(() -> obterProdutoPeloId.execute(2L))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Produto não localizado");
     }
