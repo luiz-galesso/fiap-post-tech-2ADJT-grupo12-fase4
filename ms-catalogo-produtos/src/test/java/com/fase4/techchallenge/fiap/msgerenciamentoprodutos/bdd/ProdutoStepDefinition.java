@@ -10,14 +10,12 @@ import io.cucumber.java.pt.Quando;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Nested;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
 import java.util.Random;
 
 import static com.fase4.techchallenge.fiap.msgerenciamentoprodutos.utils.ProdutoHelper.gerarProduto;

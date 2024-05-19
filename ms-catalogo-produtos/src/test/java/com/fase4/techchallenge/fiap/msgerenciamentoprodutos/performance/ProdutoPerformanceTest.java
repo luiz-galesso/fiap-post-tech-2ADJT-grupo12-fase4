@@ -21,7 +21,7 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 public class ProdutoPerformanceTest extends Simulation
 {
     private final HttpProtocolBuilder httpProtocolBuilder
-            = http.baseUrl("http://localhost:8080/ms-gerenciamento-produtos")
+            = http.baseUrl("http://localhost:8080/ms-catalogo-produtos")
             .header("Content-Type", "application/json");
 
     ActionBuilder cadastrarProduto = http("Cadastrar produto")

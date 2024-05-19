@@ -13,7 +13,7 @@ system-test: start-app
 	@echo "Executando testes de sistema"
 	mvn test -P system-test
 
-performance-test:
+performance-test: start-app
 	@echo "Executando testes de performance"
 	mvn gatling:test -P performance-test
 

@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Random;
+
 import static com.fase4.techchallenge.fiap.msgerenciamentoprodutos.utils.ProdutoHelper.gerarProduto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -50,20 +52,20 @@ public class ConsomeEstoqueProdutoIT {
 
     @Test
     void deveGerarExcecao_QuandoQuantidadeInvalida() {
-        Long id = 1L;
+        Produto produto = cadastrarProduto.execute(gerarProduto("Produto " + new Random().nextLong()));
         //assert
         assertThatThrownBy(() -> consomeEstoqueProduto
-                .execute(id, 0L))
+                .execute(produto.getCodProduto(), 0L))
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Quantidade inválida.");
     }
 
     @Test
     void deveGerarExecao_QuandoEstoqueInsuficiente() {
-        Long id = 1L;
+        Produto produto = cadastrarProduto.execute(gerarProduto("Produto " + new Random().nextLong()));
         //assert
         assertThatThrownBy(() -> consomeEstoqueProduto
-                .execute(id, 1000L))
+                .execute(produto.getCodProduto(), 1000L))
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Estoque insuficiente.");
     }
