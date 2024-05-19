@@ -62,6 +62,7 @@ services:
       timeout: 10s
       retries: 5
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto
       SPRING_DATASOURCE_PASSWORD: passdbproduto
@@ -74,6 +75,7 @@ services:
     depends_on:
       - db-cliente
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-cliente:5432/db-cliente
       SPRING_DATASOURCE_USERNAME: dbcliente
       SPRING_DATASOURCE_PASSWORD: passdbcliente
@@ -86,6 +88,7 @@ services:
     depends_on:
       - db-pedido
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-pedido:5432/db-pedido
       SPRING_DATASOURCE_USERNAME: dbpedido
       SPRING_DATASOURCE_PASSWORD: passdbpedido
@@ -101,6 +104,7 @@ services:
     depends_on:
       - db-logistica
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-logistica:5432/db-logistica
       SPRING_DATASOURCE_USERNAME: dblogistica
       SPRING_DATASOURCE_PASSWORD: passdblogistica
@@ -114,6 +118,7 @@ services:
       ms-catalogo-produtos:
         condition: service_healthy
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto
       SPRING_DATASOURCE_PASSWORD: passdbproduto
