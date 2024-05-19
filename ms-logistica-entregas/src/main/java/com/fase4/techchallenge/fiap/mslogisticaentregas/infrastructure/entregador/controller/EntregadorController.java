@@ -26,8 +26,6 @@ public class EntregadorController {
     private final CadastrarEntregador cadastrarEntregador;
     private final AtualizarEntregador atualizarEntregador;
     private final ObterEntregadorPeloId obterEntregadorPeloId;
-    private final AlocarRecursoEntregador alocarRecursoEntregador;
-    private final DesalocarRecursoEntregador desalocarRecursoEntregador;
     private final CadastrarTabelaDeFrete cadastrarTabelaDeFrete;
     private final AtualizarTabelaDeFrete atualizarTabelaDeFrete;
     private final ObterTabelaDeFretePeloIdEntregador obterTabelaDeFretePeloIdEntregador;
@@ -36,8 +34,6 @@ public class EntregadorController {
         this.cadastrarEntregador = cadastrarEntregador;
         this.atualizarEntregador = atualizarEntregador;
         this.obterEntregadorPeloId = obterEntregadorPeloId;
-        this.alocarRecursoEntregador = alocarRecursoEntregador;
-        this.desalocarRecursoEntregador = desalocarRecursoEntregador;
         this.cadastrarTabelaDeFrete = cadastrarTabelaDeFrete;
         this.atualizarTabelaDeFrete = atualizarTabelaDeFrete;
         this.obterTabelaDeFretePeloIdEntregador = obterTabelaDeFretePeloIdEntregador;
@@ -67,21 +63,6 @@ public class EntregadorController {
         return new ResponseEntity<>(entregador, HttpStatus.OK);
     }
 
-    @Operation(summary = "Alocar um recurso de um entregador", description = "Serviço utilizado para alocar recursos de entregador.")
-    @PutMapping(value = "/{id}/alocar", produces = "application/json")
-    @Transactional
-    public ResponseEntity<?> alocar(@PathVariable Long id) {
-        var alocarRecursoEntregadorRetorno = alocarRecursoEntregador.execute(id);
-        return new ResponseEntity<>(alocarRecursoEntregadorRetorno, HttpStatus.ACCEPTED);
-    }
-
-    @Operation(summary = "Desalocar um recurso de um entregador", description = "Serviço utilizado para desalocar recursos de entregador.")
-    @PutMapping(value = "/{id}/desalocar", produces = "application/json")
-    @Transactional
-    public ResponseEntity<?> desalocar(@PathVariable Long id) {
-        var desalocarRecursoEntregadorRetorno = desalocarRecursoEntregador.execute(id);
-        return new ResponseEntity<>(desalocarRecursoEntregadorRetorno, HttpStatus.ACCEPTED);
-    }
 
     @Operation(summary = "Realiza o cadastro de uma nova tabela de frete para o Entregador", description = "Serviço utilizado para cadastro de tabela de frete para um Entregador")
     @PostMapping(value = "/{idEntregador}/tabeladefrete", produces = "application/json")

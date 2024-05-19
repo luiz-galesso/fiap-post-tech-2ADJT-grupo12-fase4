@@ -41,7 +41,6 @@ public class Entrega {
     //@NotNull
     private Double valorFrete;
 
-    private String idRastreio;
     @NotNull
     @AttributeOverrides({
             @AttributeOverride(name="logradouro",column = @Column(name="origemLogradouro")),
@@ -78,8 +77,6 @@ public class Entrega {
     private SituacaoEntrega situacaoEntrega;
     @NotNull
     private LocalDateTime dataSituacaoEntrega;
-
-    private String descritivoLocalizacao;
 
     private String nomeRecebedor;
 }

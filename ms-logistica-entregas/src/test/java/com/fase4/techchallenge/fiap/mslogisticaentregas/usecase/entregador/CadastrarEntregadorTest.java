@@ -43,7 +43,6 @@ public class CadastrarEntregadorTest {
             Entregador entregador = EntregadorHelper.gerarEntregador(null);
             var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(),
                     entregador.getCnpj(),
-                    entregador.getSituacao(),
                     entregador.getQuantidadeRecursosDisponiveis());
 
             when(entregadorGateway.create(any(Entregador.class))).thenReturn(entregador);
@@ -63,47 +62,11 @@ public class CadastrarEntregadorTest {
         }
 
         @Test
-        void deveCadastrarEntregadorAtivoQuandoSituacaoNula() {
-            Entregador entregador = EntregadorHelper.gerarEntregador(null);
-
-            var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(),
-                    entregador.getCnpj(),
-                    null,
-                    entregador.getQuantidadeRecursosDisponiveis());
-
-            when(entregadorGateway.create(any(Entregador.class))).thenReturn(entregador);
-
-            var entregadorInserido = cadastrarEntregador.execute(entregadorInsertDTO);
-
-            assertThat(entregadorInserido.getSituacao()).isEqualTo("ATIVO");
-            assertThat(entregadorInsertDTO.getSituacao()).isNotEqualTo(entregadorInserido.getSituacao());
-
-        }
-
-        @Test
-        void deveCadastrarEntregadorAtivoQuandoSituacaoDiferenteDeAtivo() {
-            Entregador entregador = EntregadorHelper.gerarEntregador(null);
-
-            var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(),
-                    entregador.getCnpj(),
-                    "INATIVO",
-                    entregador.getQuantidadeRecursosDisponiveis());
-
-            when(entregadorGateway.create(any(Entregador.class))).thenReturn(entregador);
-
-            var entregadorInserido = cadastrarEntregador.execute(entregadorInsertDTO);
-
-            assertThat(entregadorInserido.getSituacao()).isEqualTo("ATIVO");
-            assertThat(entregadorInsertDTO.getSituacao()).isNotEqualTo(entregadorInserido.getSituacao());
-        }
-
-        @Test
         void deveGerarExcecaoQuandoQuantidadeDeRecursosMenorOuIgualAZero() {
             Entregador entregador = EntregadorHelper.gerarEntregador(null);
 
             var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(),
                     entregador.getCnpj(),
-                    "INATIVO",
                     0L);
             assertThatThrownBy(() -> cadastrarEntregador.execute(entregadorInsertDTO))
                     .isInstanceOf(BusinessErrorException.class)
@@ -117,7 +80,6 @@ public class CadastrarEntregadorTest {
 
             var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(),
                     entregador.getCnpj(),
-                    "INATIVO",
                     entregador.getQuantidadeRecursosDisponiveis());
 
             when(entregadorGateway.findByCnpj(any(Long.class))).thenReturn(Optional.of(entregador));

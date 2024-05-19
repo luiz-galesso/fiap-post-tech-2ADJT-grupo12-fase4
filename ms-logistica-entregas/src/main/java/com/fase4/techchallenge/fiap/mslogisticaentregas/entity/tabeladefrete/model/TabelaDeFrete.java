@@ -18,13 +18,15 @@ public class TabelaDeFrete {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tabelaDeFrete_generator")
-    @SequenceGenerator(name = "tabelaDeFrete_generator", sequenceName = "tabelaDeFrete_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tabelafrete_generator")
+    @SequenceGenerator(name = "tabelafrete_generator", sequenceName = "tabelafrete_sequence", allocationSize = 1)
     private Long id;
     @NotNull
-    private String cepOrigem;
+    private Long cepOrigem;
     @NotNull
-    private String cepDestino;
+    private Long cepDestinoInicial;
+    @NotNull
+    private Long cepDestinoFinal;
     private Double valorFrete;
     private Long prazoEntregaEmHoras;
 
@@ -32,9 +34,10 @@ public class TabelaDeFrete {
     @NotNull
     private Entregador entregador;
 
-    public TabelaDeFrete(String cepOrigem, String cepDestino, Double valorFrete, Long prazoEntregaEmHoras, Entregador entregador) {
+    public TabelaDeFrete(Long cepOrigem, Long cepDestinoInicial, Long cepDestinoFinal,Double valorFrete, Long prazoEntregaEmHoras, Entregador entregador) {
         this.cepOrigem = cepOrigem;
-        this.cepDestino = cepDestino;
+        this.cepDestinoInicial = cepDestinoInicial;
+        this.cepDestinoFinal = cepDestinoFinal;
         this.valorFrete = valorFrete;
         this.prazoEntregaEmHoras = prazoEntregaEmHoras;
         this.entregador = entregador;

@@ -84,7 +84,6 @@ public class EntregadorControllerTest {
             var entregador = EntregadorHelper.gerarEntregador(null);
             var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome()
                     , entregador.getCnpj()
-                    , entregador.getSituacao()
                     , entregador.getQuantidadeRecursosDisponiveis()
             );
 
@@ -98,7 +97,7 @@ public class EntregadorControllerTest {
         @Test
         void deveRetornarErroQuandoCnpjJaExiste() throws Exception {
             var entregador = EntregadorHelper.gerarEntregador(null);
-            var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(), entregador.getCnpj(), entregador.getSituacao(), entregador.getQuantidadeRecursosDisponiveis());
+            var entregadorInsertDTO = new EntregadorInsertDTO(entregador.getNome(), entregador.getCnpj(), entregador.getQuantidadeRecursosDisponiveis());
             when(cadastrarEntregador.execute(any(EntregadorInsertDTO.class))).thenThrow(new BusinessErrorException("Já existe um entregador com o cnpj informado"));
 
             mockMvc.perform(post("/entregador").content(asJsonString(entregadorInsertDTO)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());

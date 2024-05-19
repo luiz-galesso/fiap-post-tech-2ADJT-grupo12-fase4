@@ -15,8 +15,9 @@ public class TabelaDeFreteHelper {
                         .situacao("ATIVO")
                         .quantidadeRecursosDisponiveis(8L)
                         .build())
-                .cepOrigem("84015030")
-                .cepDestino("75100200")
+                .cepOrigem(84015030L)
+                .cepDestinoInicial(70000000L)
+                .cepDestinoInicial(80000000L)
                 .valorFrete(80.25)
                 .prazoEntregaEmHoras(6L)
                 .build();

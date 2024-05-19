@@ -9,6 +9,8 @@ public record PedidoInsertDTO(
         Integer idEndereco,
         double valorFrete,
         String meioPagamento,
-        List<Produto> produtos
+        List<Produto> produtos,
+
+        Long idTabelaFrete
 ) {
 }

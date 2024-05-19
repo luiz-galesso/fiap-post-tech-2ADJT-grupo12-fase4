@@ -7,8 +7,11 @@ import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entrega.model.End
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entrega.model.Entrega;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.origem.gateway.OrigemGateway;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.origem.model.Origem;
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.gateway.TabelaDeFreteGateway;
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.entrega.controller.dto.EntregaInsertDTO;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.cliente.ObtemClientePeloEmail;
+import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.entregador.AlocarRecursoEntregador;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.usecase.exception.BusinessErrorException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,10 @@ public class CadastraEntrega {
     private final OrigemGateway origemGateway;
 
     private final ObtemClientePeloEmail obtemClientePeloEmail;
+
+    private final TabelaDeFreteGateway tabelaDeFreteGateway;
+
+    private final AlocarRecursoEntregador alocarRecursoEntregador;
 
     public Entrega execute(EntregaInsertDTO entregaInsertDTO) {
 
@@ -57,25 +64,27 @@ public class CadastraEntrega {
                         entregaInsertDTO.getEnderecoDestino().getEstado(),
                         entregaInsertDTO.getEnderecoDestino().getReferencia());
 
+        TabelaDeFrete tabelaDeFrete = tabelaDeFreteGateway.findById(entregaInsertDTO.getIdTabelaFrete()).orElseThrow(()-> new BusinessErrorException("Não foi possível obter a tabela de frete"));
+
+        alocarRecursoEntregador.execute(tabelaDeFrete.getEntregador().getId());
 
         Entrega entrega =
                 new Entrega(null,
                         entregaInsertDTO.getIdPedido(),
-                        null,
+                        tabelaDeFrete.getEntregador(),
                         cliente.getEmail(),
                         cliente.getNome(),
-                        null,
-                        null,
-                        null,
+                        tabelaDeFrete.getPrazoEntregaEmHoras(),
+                        tabelaDeFrete.getValorFrete(),
                         enderecoOrigem,
                         enderecoDestino,
                         entregaInsertDTO.getDataCriacao(),
                         LocalDateTime.now(),
-                        null,
+                        LocalDateTime.now().plusHours(tabelaDeFrete.getPrazoEntregaEmHoras()),
                         SituacaoEntrega.GERADA,
                         LocalDateTime.now(),
-                        null,
-                        null);
+                        null
+                        );
 
         return this.entregaGateway.create(entrega);
 

@@ -51,7 +51,8 @@ public class CadastrarPedido {
                 pedidoInsertDTO.valorFrete(),
                 PedidoStatus.GERADO.toString(),
                 pedidoInsertDTO.meioPagamento(),
-                LocalDateTime.now());
+                LocalDateTime.now(),
+                pedidoInsertDTO.idTabelaFrete());
 
         return this.pedidoGateway.create(pedido);
     }

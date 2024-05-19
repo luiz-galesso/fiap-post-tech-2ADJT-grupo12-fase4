@@ -8,6 +8,5 @@ import lombok.Data;
 public class EntregadorInsertDTO {
     private String nome;
     private Long cnpj;
-    private String situacao;
     private Long quantidadeRecursosDisponiveis;
 }

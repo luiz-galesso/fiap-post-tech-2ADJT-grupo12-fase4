@@ -34,7 +34,7 @@ class CadastrarPedidoIT {
     void devePermitirBuscarPedido() {
         Pedido pedido = PedidoHelper.gerarPedido();
         pedidoGateway.create(pedido);
-        PedidoInsertDTO pedidoInsertDTO = new PedidoInsertDTO(pedido.getEmailCliente(), pedido.getEndereco().getId(), pedido.getValorFrete(), pedido.getMeioPagamento(), pedido.getProdutos());
+        PedidoInsertDTO pedidoInsertDTO = new PedidoInsertDTO(pedido.getEmailCliente(), pedido.getEndereco().getId(), pedido.getValorFrete(), pedido.getMeioPagamento(), pedido.getProdutos(), pedido.getIdTabelaFrete());
 
         var pedidoRetornado = cadastrarPedido.execute(pedidoInsertDTO);
 

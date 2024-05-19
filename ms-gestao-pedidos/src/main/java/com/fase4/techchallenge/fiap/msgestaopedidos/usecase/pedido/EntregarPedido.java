@@ -21,7 +21,7 @@ public class EntregarPedido {
 
         if (pedido.getStatus().equalsIgnoreCase("ENTREGUE")) {
             throw new BussinessErrorException("Pedido Entregue.");
-        } else if (!pedido.getStatus().equalsIgnoreCase("EM_TRANSPORTE")) {
+        } else if (!pedido.getStatus().equalsIgnoreCase("EM_LOGISTICA")) {
             throw new BussinessErrorException("Pedido não está em Transporte.");
         }
         

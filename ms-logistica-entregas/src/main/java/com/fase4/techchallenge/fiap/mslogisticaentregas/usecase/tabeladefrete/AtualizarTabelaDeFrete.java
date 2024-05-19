@@ -15,31 +15,18 @@ public class AtualizarTabelaDeFrete {
     private final TabelaDeFreteGateway tabelaDeFreteGateway;
 
     public TabelaDeFrete execute(Long idEntregador, Long idTabelaFrete, TabelaDeFreteUpdateDTO tabelaDeFreteDTO){
-        Optional<TabelaDeFrete> tabelaDeFreteOptional = tabelaDeFreteGateway.findById(idTabelaFrete);
+        TabelaDeFrete tabelaDeFrete = tabelaDeFreteGateway.findById(idTabelaFrete).orElseThrow(()-> new BusinessErrorException("Não foi encontrado a tabela de frete cadastrada com o Id informado.") );
 
-        if (tabelaDeFreteOptional.isEmpty()){
-            throw new BusinessErrorException("Não foi encontrado a tabela de frete cadastrada com o Id informado.");
-        }
-
-        if (!tabelaDeFreteOptional.get().getEntregador().getId().equals(idEntregador)){
+        if (!tabelaDeFrete.getEntregador().getId().equals(idEntregador)){
             throw new BusinessErrorException("Tabela de Frente não pertence ao entregador.");
         }
 
-        Optional<TabelaDeFrete> outraTabelaExistente = tabelaDeFreteGateway.findTabelaDeFreteByIdEntregadorAndCepOrigemAndCepDestinoAndIdTabelaNot(idEntregador,
-                tabelaDeFreteDTO.getCepOrigem(),
-                tabelaDeFreteDTO.getCepDestino(),
-                idTabelaFrete);
+        tabelaDeFrete.setCepOrigem(tabelaDeFreteDTO.getCepOrigem());
+        tabelaDeFrete.setCepDestinoInicial(tabelaDeFreteDTO.getCepDestinoInicial());
+        tabelaDeFrete.setCepDestinoFinal(tabelaDeFreteDTO.getCepDestinoFinal());
+        tabelaDeFrete.setValorFrete(tabelaDeFreteDTO.getValorFrete());
+        tabelaDeFrete.setPrazoEntregaEmHoras(tabelaDeFreteDTO.getPrazoEntregaEmHoras());
 
-        if (outraTabelaExistente.isPresent()){
-            throw new BusinessErrorException("Já existe outra Tabela de Frente para este entregador com a mesma Origem e Destino.");
-        }
-
-        TabelaDeFrete tabelaDeFrete = new TabelaDeFrete(idTabelaFrete,
-                tabelaDeFreteDTO.getCepOrigem(),
-                tabelaDeFreteDTO.getCepDestino(),
-                tabelaDeFreteDTO.getValorFrete(),
-                tabelaDeFreteDTO.getPrazoEntregaEmHoras(),
-                tabelaDeFreteOptional.get().getEntregador());
         return this.tabelaDeFreteGateway.update(tabelaDeFrete);
     }
 }

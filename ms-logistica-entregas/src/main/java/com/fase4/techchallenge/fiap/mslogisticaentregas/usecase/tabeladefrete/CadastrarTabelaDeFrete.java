@@ -18,11 +18,6 @@ public class CadastrarTabelaDeFrete {
     private final EntregadorGateway entregadorGateway;
 
     public TabelaDeFrete execute(Long idEntregador, TabelaDeFreteInsertDTO tabelaDeFreteDTO) {
-        Optional<TabelaDeFrete> tabelaDeFreteOptional = tabelaDeFreteGateway.findTabelaDeFreteByCepOrigemAndCepDestinoAndEntregador(tabelaDeFreteDTO.getCepOrigem(), tabelaDeFreteDTO.getCepDestino(), idEntregador);
-
-        if (tabelaDeFreteOptional.isPresent()) {
-            throw new BusinessErrorException("Já existe uma tabela de frete do entregador para a Origem x Destino informados");
-        }
 
         Optional<Entregador> entregadorOptional = entregadorGateway.findById(idEntregador);
 
@@ -30,8 +25,20 @@ public class CadastrarTabelaDeFrete {
             throw new BusinessErrorException("Entregador não encontrado");
         }
 
+        Optional<TabelaDeFrete> tabelaDeFreteOptional =
+                tabelaDeFreteGateway.findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador
+                        (tabelaDeFreteDTO.getCepOrigem(),
+                                tabelaDeFreteDTO.getCepDestinoInicial(),
+                                tabelaDeFreteDTO.getCepDestinoFinal(),
+                                entregadorOptional.get());
+
+        if (tabelaDeFreteOptional.isPresent()) {
+            throw new BusinessErrorException("Já existe uma tabela de frete do entregador para a Origem x Destino informados");
+        }
+
         TabelaDeFrete tabelaDeFrete = new TabelaDeFrete(tabelaDeFreteDTO.getCepOrigem(),
-                tabelaDeFreteDTO.getCepDestino(),
+                tabelaDeFreteDTO.getCepDestinoInicial(),
+                tabelaDeFreteDTO.getCepDestinoFinal(),
                 tabelaDeFreteDTO.getValorFrete(),
                 tabelaDeFreteDTO.getPrazoEntregaEmHoras(),
                 entregadorOptional.get());

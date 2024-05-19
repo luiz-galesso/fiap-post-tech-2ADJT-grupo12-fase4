@@ -46,7 +46,9 @@ public class Pedido {
 
     private LocalDateTime dataEntrega;
 
-    public Pedido(String emailCliente, Endereco endereco, List<Produto> produtos, double valorPedido, double valorFrete, String status, String meioPagamento, LocalDateTime dataCriacao) {
+    private Long idTabelaFrete;
+
+    public Pedido(String emailCliente, Endereco endereco, List<Produto> produtos, double valorPedido, double valorFrete, String status, String meioPagamento, LocalDateTime dataCriacao, Long idTabelaFrete) {
         this.emailCliente = emailCliente;
         this.endereco = endereco;
         this.produtos = produtos;
@@ -55,6 +57,7 @@ public class Pedido {
         this.status = status;
         this.meioPagamento = meioPagamento;
         this.dataCriacao = dataCriacao;
+        this.idTabelaFrete = idTabelaFrete;
     }
 
 }
