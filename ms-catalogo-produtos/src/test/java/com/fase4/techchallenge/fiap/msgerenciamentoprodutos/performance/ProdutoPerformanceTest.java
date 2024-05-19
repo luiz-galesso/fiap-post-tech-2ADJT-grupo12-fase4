@@ -1,5 +1,6 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoprodutos.performance;
 
+import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.EstoqueDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.controller.dto.ProdutoUpdateDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,6 +60,36 @@ public class ProdutoPerformanceTest extends Simulation
             })
             .then(status().is(HttpStatus.OK.value()));
 
+    ActionBuilder aumentarEstoque = http("Aumentar estoque")
+            .put("/produtos/#{id}/aumenta-estoque")
+            .body(StringBody(session -> {
+                EstoqueDTO estoqueDTO = new EstoqueDTO(10L);
+                try {
+                    return asJsonString(estoqueDTO);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }))
+            .checkIf((response, session) -> {
+                return session.getString("id") != null;
+            })
+            .then(status().is(HttpStatus.OK.value()));
+
+    ActionBuilder consumirEstoque = http("Consumir estoque")
+            .put("/produtos/#{id}/consome-estoque")
+            .body(StringBody(session -> {
+                EstoqueDTO estoqueDTO = new EstoqueDTO(10L);
+                try {
+                    return asJsonString(estoqueDTO);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }))
+            .checkIf((response, session) -> {
+                return session.getString("id") != null;
+            })
+            .then(status().is(HttpStatus.OK.value()));
+
     ScenarioBuilder cenarioCadastrarProduto = scenario("Cadastar produto")
             .exec(cadastrarProduto);
 
@@ -69,6 +100,14 @@ public class ProdutoPerformanceTest extends Simulation
     ScenarioBuilder cenarioBuscarProduto = scenario("Buscar produto")
             .exec(cadastrarProduto)
             .exec(buscarProduto);
+
+    ScenarioBuilder cenarioAumentarEstoque = scenario("Aumentar estoque")
+            .exec(cadastrarProduto)
+            .exec(aumentarEstoque);
+
+    ScenarioBuilder cenarioConsumirEstoque = scenario("Consumir estoque")
+            .exec(cadastrarProduto)
+            .exec(consumirEstoque);
 
     {
         setUp(
@@ -101,6 +140,26 @@ public class ProdutoPerformanceTest extends Simulation
                                 rampUsersPerSec(10)
                                         .to(1)
                                         .during(Duration.ofSeconds(20))
+                ),
+                cenarioAumentarEstoque.injectOpen(
+                        rampUsersPerSec(2)
+                                .to(10)
+                                .during(Duration.ofSeconds(10)),
+                        constantUsersPerSec(10)
+                                .during(Duration.ofSeconds(20)),
+                        rampUsersPerSec(10)
+                                .to(1)
+                                .during(Duration.ofSeconds(10))
+                ),
+                cenarioConsumirEstoque.injectOpen(
+                        rampUsersPerSec(10)
+                                .to(10)
+                                .during(Duration.ofSeconds(25)),
+                        constantUsersPerSec(16)
+                                .during(Duration.ofSeconds(40)),
+                        rampUsersPerSec(10)
+                                .to(10)
+                                .during(Duration.ofSeconds(10))
                 )
         )
                 .protocols(httpProtocolBuilder)
