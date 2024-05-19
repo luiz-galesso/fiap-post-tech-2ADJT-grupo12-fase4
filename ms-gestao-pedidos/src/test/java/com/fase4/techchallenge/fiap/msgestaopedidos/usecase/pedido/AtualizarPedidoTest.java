@@ -50,7 +50,7 @@ class AtualizarPedidoTest {
         when(pedidoGateway.findById(any(Long.class))).thenReturn(Optional.of(pedido));
         when(pedidoGateway.update(any(Pedido.class))).thenReturn(pedido);
         PedidoUpdateDTO pedidoUpdateDTO = new PedidoUpdateDTO(pedido.getEmailCliente()
-                , pedido.getIdEnderecoCliente()
+                , pedido.getEndereco().getId()
                 , 100.00
                 , 9.58
                 , "CARTAO_CREDITO"
@@ -85,7 +85,7 @@ class AtualizarPedidoTest {
         when(pedidoGateway.findById(any(Long.class))).thenReturn(Optional.of(pedido));
         when(pedidoGateway.update(any(Pedido.class))).thenReturn(pedido);
         PedidoUpdateDTO pedidoUpdateDTO = new PedidoUpdateDTO(pedido.getEmailCliente()
-                , pedido.getIdEnderecoCliente()
+                , pedido.getEndereco().getId()
                 , 100.00
                 , 9.58
                 , "CARTAO_CREDITO"

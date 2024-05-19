@@ -15,7 +15,8 @@ public class ProdutoHelper {
                 "Smartphone Galaxy S21",
                 "Samsung",
                 "Telefones",
-                50L
+                50L,
+                2000D
         );
     }
 
@@ -24,7 +25,8 @@ public class ProdutoHelper {
                 descricao,
                 "Samsung",
                 "Telefones",
-                50L
+                50L,
+                2000D
         );
     }
 
@@ -34,6 +36,7 @@ public class ProdutoHelper {
                 pDTO.marca(),
                 pDTO.categoria(),
                 pDTO.quantidade(),
+                pDTO.valorUnitario(),
                 LocalDateTime.now());
     }
 
@@ -43,7 +46,8 @@ public class ProdutoHelper {
                 pDTO.descricaoProduto(),
                 pDTO.marca(),
                 pDTO.categoria(),
-                pDTO.quantidade());
+                pDTO.quantidade(),
+                pDTO.valorUnitario());
     }
 
     public static Produto produtoGerado(ProdutoInsertDTO pDTO, Long id) {
@@ -53,6 +57,7 @@ public class ProdutoHelper {
                 pDTO.marca(),
                 pDTO.categoria(),
                 pDTO.quantidade(),
+                pDTO.valorUnitario(),
                 LocalDateTime.now());
     }
 

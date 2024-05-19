@@ -30,7 +30,7 @@ class AtualizarPedidoIT {
         Pedido pedido = PedidoHelper.gerarPedido();
         pedidoGateway.create(pedido);
         PedidoUpdateDTO pedidoUpdateDTO = new PedidoUpdateDTO(pedido.getEmailCliente()
-                , pedido.getIdEnderecoCliente()
+                , pedido.getEndereco().getId()
                 , 100.00
                 , 9.58
                 , "CARTAO_CREDITO"
@@ -57,7 +57,7 @@ class AtualizarPedidoIT {
         pedido.setStatus("EM_SEPARACAO");
         pedidoGateway.create(pedido);
         PedidoUpdateDTO pedidoUpdateDTO = new PedidoUpdateDTO(pedido.getEmailCliente()
-                , pedido.getIdEnderecoCliente()
+                , pedido.getEndereco().getId()
                 , 100.00
                 , 9.58
                 , "CARTAO_CREDITO"

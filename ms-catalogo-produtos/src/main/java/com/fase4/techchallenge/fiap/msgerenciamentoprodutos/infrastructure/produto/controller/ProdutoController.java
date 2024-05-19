@@ -32,6 +32,7 @@ public class ProdutoController {
     private final ConsomeEstoqueProduto consomeEstoqueProduto;
     private final ConsomeEstoquesMassivamente consomeEstoquesMassivamente;
     private final AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
+    private final ObtemListaProdutosComEstoque obtemListaProdutosComEstoque;
 
     @Operation(summary = "Realiza um novo cadastro de produto", description = "Serviço utilizado para cadastro do produto.")
     @PostMapping(produces = "application/json")
@@ -95,5 +96,13 @@ public class ProdutoController {
     public ResponseEntity<?> aumentaEstoques(@RequestBody List<ProdutoEstoqueDTO> produtoEstoqueList) {
         aumentaEstoquesMassivamente.execute(produtoEstoqueList);
         return new ResponseEntity<> (new DefaultResponse(Instant.now(),"OK","Estoques foram aumentados com sucesso."), HttpStatus.ACCEPTED);
+    }
+
+    @Operation(summary = "Obtem todos produtos com estoque positivo", description = "Serviço utilizado para obter todos produtos com estoque positivo.")
+    @GetMapping(value = "/estoque-positivo", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> buscaProdutosDisponiveis() {
+        List<Produto> produtoList = obtemListaProdutosComEstoque.execute();
+        return new ResponseEntity<> (produtoList, HttpStatus.OK);
     }
 }

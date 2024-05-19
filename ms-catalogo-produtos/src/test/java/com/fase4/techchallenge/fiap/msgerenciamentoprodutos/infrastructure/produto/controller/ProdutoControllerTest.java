@@ -51,6 +51,8 @@ public class ProdutoControllerTest {
     AumentaEstoquesMassivamente aumentaEstoquesMassivamente;
 
     @Mock
+    ObtemListaProdutosComEstoque obtemListaProdutosComEstoque;
+    @Mock
     ProdutoGateway produtoGateway;
 
 
@@ -69,7 +71,8 @@ public class ProdutoControllerTest {
                 aumentaEstoqueProduto,
                 consomeEstoqueProduto,
                 consomeEstoquesMassivamente,
-                aumentaEstoquesMassivamente
+                aumentaEstoquesMassivamente,
+                obtemListaProdutosComEstoque
         );
         mockMvc = MockMvcBuilders.standaloneSetup(produtoController)
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())

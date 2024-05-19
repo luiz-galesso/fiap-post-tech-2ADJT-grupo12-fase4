@@ -1,5 +1,6 @@
 package com.fase4.techchallenge.fiap.msgestaopedidos.entity.model;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

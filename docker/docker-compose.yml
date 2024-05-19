@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   db-produto:
@@ -56,6 +56,11 @@ services:
       - "8081:8080"
     depends_on:
       - db-produto
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/ms-catalogo-produtos/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto
@@ -106,7 +111,8 @@ services:
     container_name: ms-catalogo-produtos-batch
     build: ../ms-gerenciamento-produtos-batch/.
     depends_on:
-      - db-produto
+      ms-catalogo-produtos:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto

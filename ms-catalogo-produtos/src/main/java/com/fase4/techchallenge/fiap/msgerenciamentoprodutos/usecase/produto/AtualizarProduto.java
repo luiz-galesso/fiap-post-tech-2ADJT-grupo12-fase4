@@ -29,8 +29,10 @@ public class AtualizarProduto {
                 produtoUpdateDTO.marca(),
                 produtoUpdateDTO.categoria(),
                 produtoUpdateDTO.quantidade(),
+                produtoUpdateDTO.valorUnitario(),
                 LocalDateTime.now()
         );
+
         return this.produtoGateway.update(produto);
     }
 }

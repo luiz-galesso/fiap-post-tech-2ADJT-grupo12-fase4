@@ -19,7 +19,8 @@ import java.time.LocalDateTime;
 public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_generator")
+    @SequenceGenerator(name = "produto_generator", sequenceName = "produto_sequence", allocationSize = 1)
     private Long codProduto;
     @NotBlank
     @Column(unique = true)
@@ -30,13 +31,17 @@ public class Produto {
     private String categoria;
     @NotNull
     private Long quantidade;
+    @NotNull
+    private double valorUnitario;
+
     private LocalDateTime dataAtualizacao;
 
-    public Produto(String descricaoProduto, String marca, String categoria, Long quantidade, LocalDateTime dataAtualizacao) {
+    public Produto(String descricaoProduto, String marca, String categoria, Long quantidade, double valorUnitario, LocalDateTime dataAtualizacao) {
         this.descricaoProduto = descricaoProduto;
         this.marca = marca;
         this.categoria = categoria;
         this.quantidade = quantidade;
+        this.valorUnitario = valorUnitario;
         this.dataAtualizacao = dataAtualizacao;
     }
 }

@@ -19,7 +19,7 @@ public class PedidoHelper {
                 .meioPagamento("PIX")
                 .valorPedido(200.00)
                 .emailCliente("john@email.com")
-                .idEnderecoCliente(1)
+                .endereco(new Endereco(1, "Rua azul", "55", "Jardim verde", (String) null,  9360490L, "Monte Rosa", "SP", null))
                 .produtos(produtos)
                 .dataPagamento(null)
                 .dataEntrega(null)

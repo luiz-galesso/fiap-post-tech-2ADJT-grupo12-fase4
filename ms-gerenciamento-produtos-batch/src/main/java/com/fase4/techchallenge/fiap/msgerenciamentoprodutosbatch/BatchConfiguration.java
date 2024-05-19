@@ -65,7 +65,7 @@ public class BatchConfiguration
                 .name("produtoReader")
                 .resource(resource)
                 .delimited()
-                .names("descricaoProduto", "marca", "categoria", "quantidade")
+                .names("descricaoProduto", "marca", "categoria", "quantidade","valorUnitario")
                 .linesToSkip(1)
                 .fieldSetMapper(fieldSetMapper)
                 .build();
@@ -81,8 +81,8 @@ public class BatchConfiguration
         return new JdbcBatchItemWriterBuilder<Produto>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .dataSource(dataSource)
-                .sql("INSERT INTO tb_produto (descricao_produto, marca, categoria, quantidade, data_atualizacao) " +
-                        "VALUES (:descricaoProduto, :marca, :categoria, :quantidade, :dataAtualizacao)")
+                .sql("INSERT INTO tb_produto (cod_produto, descricao_produto, marca, categoria, quantidade, valor_unitario, data_atualizacao) " +
+                        "VALUES (NEXTVAL('produto_sequence'), :descricaoProduto, :marca, :categoria, :quantidade, :valorUnitario, :dataAtualizacao)")
                 .build();
     }
 

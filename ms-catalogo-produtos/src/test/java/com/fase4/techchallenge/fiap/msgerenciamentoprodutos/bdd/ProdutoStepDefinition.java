@@ -92,7 +92,8 @@ public class ProdutoStepDefinition
                 produto.getDescricaoProduto(),
                 produto.getMarca(),
                 produto.getCategoria(),
-                new Random().nextLong()
+                new Random().nextLong(),
+                new Random().nextDouble()
         );
 
         response = given()

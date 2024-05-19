@@ -25,6 +25,7 @@ public class CadastrarProduto {
                             produtoDTO.marca(),
                             produtoDTO.categoria(),
                             produtoDTO.quantidade(),
+                            produtoDTO.valorUnitario(),
                             LocalDateTime.now()
                     );
             return this.produtoGateway.create(produto);

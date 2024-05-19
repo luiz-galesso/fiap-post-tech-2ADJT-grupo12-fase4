@@ -40,6 +40,8 @@ public class Pedido {
     @NotNull(message = "Deve ser informado o Meio de Pagamento.")
     private String meioPagamento;
 
+    private LocalDateTime dataCriacao;
+
     private LocalDateTime dataPagamento;
 
     private LocalDateTime dataEntrega;
