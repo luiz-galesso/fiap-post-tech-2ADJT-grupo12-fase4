@@ -46,7 +46,7 @@ public class ProdutoControllerIT
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(gerarProduto())
-        .when().post("/ms-gerenciamento-produtos/produtos")
+        .when().post("/ms-catalogo-produtos/produtos")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"));
@@ -61,7 +61,7 @@ public class ProdutoControllerIT
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(gerarProdutoUpdate(gerarProduto()))
         .when()
-                .put("/ms-gerenciamento-produtos/produtos/{id}", produto.getCodProduto())
+                .put("/ms-catalogo-produtos/produtos/{id}", produto.getCodProduto())
         .then()
                 .statusCode(HttpStatus.ACCEPTED.value())
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"));
@@ -71,7 +71,7 @@ public class ProdutoControllerIT
     void devePermitirBuscarPeloId() {
         Produto produto = cadastrarProduto.execute(gerarProduto());
         when()
-                .get("/ms-gerenciamento-produtos/produtos/{id}", produto.getCodProduto())
+                .get("/ms-catalogo-produtos/produtos/{id}", produto.getCodProduto())
         .then()
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"))
                 .statusCode(HttpStatus.OK.value());
@@ -81,7 +81,7 @@ public class ProdutoControllerIT
     void devePermitirApagarProduto() {
         Produto produto = cadastrarProduto.execute(gerarProduto());
         when()
-                .delete("/ms-gerenciamento-produtos/produtos/{id}", produto.getCodProduto())
+                .delete("/ms-catalogo-produtos/produtos/{id}", produto.getCodProduto())
         .then()
                 .statusCode(HttpStatus.OK.value());
     }
@@ -95,7 +95,7 @@ public class ProdutoControllerIT
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(estoqueDTO)
         .when()
-            .put("/ms-gerenciamento-produtos/produtos/{id}/aumenta-estoque", produto.getCodProduto())
+            .put("/ms-catalogo-produtos/produtos/{id}/aumenta-estoque", produto.getCodProduto())
         .then()
             .statusCode(HttpStatus.OK.value())
             .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"));
@@ -110,7 +110,7 @@ public class ProdutoControllerIT
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(estoqueDTO)
         .when()
-            .put("/ms-gerenciamento-produtos/produtos/{id}/consome-estoque", produto.getCodProduto())
+            .put("/ms-catalogo-produtos/produtos/{id}/consome-estoque", produto.getCodProduto())
         .then()
             .statusCode(HttpStatus.OK.value())
             .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/produto.schema.json"));
