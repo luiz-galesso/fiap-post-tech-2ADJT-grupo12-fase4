@@ -5,6 +5,6 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-public record ProdutoUpdateDTO (String descricaoProduto, String marca, String categoria, Long quantidade){
+public record ProdutoUpdateDTO (String descricaoProduto, String marca, String categoria, Long quantidade, double valorUnitario){
 
 };

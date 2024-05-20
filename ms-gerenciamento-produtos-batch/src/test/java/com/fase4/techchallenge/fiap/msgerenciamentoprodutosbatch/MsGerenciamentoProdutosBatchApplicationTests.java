@@ -1,10 +1,10 @@
-package com.fase4.techchallenge.fiap.mslogisticaentregas;
+package com.fase4.techchallenge.fiap.msgerenciamentoprodutosbatch;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsLogisticaEntregasApplicationTests {
+class MsGerenciamentoProdutosBatchApplicationTests {
 
 	@Test
 	void contextLoads() {

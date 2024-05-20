@@ -5,8 +5,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TabelaDeFreteInsertDTO {
-    private String cepOrigem;
-    private String cepDestino;
+    private Long cepOrigem;
+    private Long cepDestinoInicial;
+    private Long cepDestinoFinal;
     private double valorFrete;
     private Long prazoEntregaEmHoras;
 }

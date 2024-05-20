@@ -13,6 +13,6 @@ public class ObterTabelaDeFretePeloIdEntregador {
     private final TabelaDeFreteGateway tabelaDeFreteGateway;
 
     public List<TabelaDeFrete> execute(Long idEntregador) {
-        return this.tabelaDeFreteGateway.findAllByIdEntregador(idEntregador);
+        return null;//this.tabelaDeFreteGateway.findAllByIdEntregador(idEntregador);
     }
 }

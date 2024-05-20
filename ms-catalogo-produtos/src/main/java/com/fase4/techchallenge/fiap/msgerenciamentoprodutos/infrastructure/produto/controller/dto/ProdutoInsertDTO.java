@@ -11,7 +11,10 @@ public record ProdutoInsertDTO(
         @NotNull
         String categoria,
         @NotNull
-        Long quantidade
+        Long quantidade,
+
+        @NotNull
+        double valorUnitario
 
 ) {
 

@@ -1,5 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.gateway;
 
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entregador.model.Entregador;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.tabeladefrete.repository.TabelaDeFreteRepository;
 import org.springframework.stereotype.Component;
@@ -19,19 +20,17 @@ public class TabelaDeFreteGateway {
 
     public Optional<TabelaDeFrete> findById(Long id) { return this.tabelaDeFreteRepository.findById(id);}
 
-    public Optional<TabelaDeFrete> findTabelaDeFreteByCepOrigemAndCepDestinoAndEntregador(String cepOrigem, String cepDestino, Long idEntregador) { return this.tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestinoAndEntregador_Id(cepOrigem,cepDestino,idEntregador);}
-
     public void remove(Long id) { tabelaDeFreteRepository.deleteById(id);}
 
-    public List<TabelaDeFrete> findAllByIdEntregador(Long idEntregador) { return this.tabelaDeFreteRepository.findAllByEntregador_Id(idEntregador);}
-
-    public Optional<TabelaDeFrete> findTabelaDeFreteByIdEntregadorAndCepOrigemAndCepDestinoAndIdTabelaNot(Long idEntregador, String cepOrigem, String cepDestino, Long idTabelaDeFrete) {
-        return this.tabelaDeFreteRepository.findTabelaDeFreteByEntregador_IdAndCepOrigemAndCepDestinoAndIdNot(idEntregador,cepOrigem,cepDestino,idTabelaDeFrete);
+    public Optional<TabelaDeFrete> findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(Long cepOrigem, Long cepDestinoInicial, Long cepDestinoFinal, Entregador entregador)
+    {
+        return tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(cepOrigem, cepDestinoInicial, cepDestinoFinal, entregador);
     }
 
-    public List<TabelaDeFrete> obterTabelaDeFretePeloCepOrigemECepDestinoDisponiveis(String cepOrigem, String cepDestino) {
-        return this.tabelaDeFreteRepository.findAllByCepOrigemAndCepDestinoAndEntregador_QuantidadeRecursosDisponiveisGreaterThanAndEntregador_SituacaoOrderByValorFrete(cepOrigem,cepDestino,0L,"ATIVO");
+    public List<TabelaDeFrete> findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(Long cepOrigem, Long cepDestino){
+        return tabelaDeFreteRepository.findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(cepOrigem,cepDestino,cepDestino);
     }
+
 
 }
 

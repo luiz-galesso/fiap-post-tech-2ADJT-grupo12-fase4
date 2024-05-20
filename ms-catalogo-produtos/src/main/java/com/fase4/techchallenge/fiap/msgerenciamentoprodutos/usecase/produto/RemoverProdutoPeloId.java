@@ -19,7 +19,7 @@ public class RemoverProdutoPeloId {
         Optional<Produto> produtoOptional = produtoGateway.findById(id);
 
         if (produtoOptional.isEmpty()) {
-            throw new BussinessErrorException("Não foi encontrado o produto cadastrado com o email informado.");
+            throw new BussinessErrorException("Não foi encontrado o produto cadastrado com o ID informado.");
         }
 
         produtoGateway.remove(id);

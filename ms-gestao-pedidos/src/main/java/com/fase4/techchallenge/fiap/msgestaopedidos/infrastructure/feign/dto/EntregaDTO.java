@@ -12,5 +12,6 @@ public class EntregaDTO {
     private String emailCliente;
     private EnderecoDestinoDTO enderecoDestino;
     private LocalDateTime dataCriacao;
+    private Long idTabelaFrete;
 
 }

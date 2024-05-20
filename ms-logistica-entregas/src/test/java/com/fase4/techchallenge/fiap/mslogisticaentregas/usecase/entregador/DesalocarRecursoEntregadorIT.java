@@ -45,7 +45,7 @@ public class DesalocarRecursoEntregadorIT {
 
         @Test
         void deveGerarExcecaoSeNaoEncontrarEntregador() {
-            assertThatThrownBy(() -> desalocarRecursoEntregador.execute(1L))
+            assertThatThrownBy(() -> desalocarRecursoEntregador.execute(100L))
                     .isInstanceOf(BusinessErrorException.class)
                     .message().isEqualTo("Entregador não localizado");
         }

@@ -13,10 +13,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AtualizarPedido {
     private final PedidoGateway pedidoGateway;
-
     public Pedido execute(Long id, PedidoUpdateDTO pedidoUpdateDTO) {
 
         Pedido pedido = pedidoGateway.findById(id).orElseThrow(() -> new BussinessErrorException("Pedido Informado não Cadastrado."));
+
+        if (pedidoUpdateDTO.meioPagamento() != pedido.getMeioPagamento() &&
+                !pedido.getStatus().equalsIgnoreCase("GERADO")) {
+            throw new BussinessErrorException("Não pode ser alterado o meio de Pagamento do Pedido. Status:" + pedido.getStatus());
+        }
 
         pedido.setProdutos(pedidoUpdateDTO.produtos());
         pedido.setValorPedido(pedidoUpdateDTO.valorPedido());
@@ -25,4 +29,5 @@ public class AtualizarPedido {
 
         return this.pedidoGateway.update(pedido);
     }
+
 }

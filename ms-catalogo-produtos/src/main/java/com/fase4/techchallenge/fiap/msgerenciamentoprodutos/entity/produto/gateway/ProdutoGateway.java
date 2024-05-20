@@ -4,6 +4,7 @@ import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.entity.produto.model
 import com.fase4.techchallenge.fiap.msgerenciamentoprodutos.infrastructure.produto.repository.ProdutoRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -29,6 +30,10 @@ public class ProdutoGateway {
 
     public void remove(Long codProduto) {
         produtoRepository.deleteById(codProduto);
+    }
+
+    public List<Produto> findByQuantidadeGreaterThan(Long quantidade) {
+        return produtoRepository.findByQuantidadeGreaterThan(quantidade);
     }
 
 }

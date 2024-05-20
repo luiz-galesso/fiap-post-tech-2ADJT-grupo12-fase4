@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   db-produto:
@@ -56,7 +56,13 @@ services:
       - "8081:8080"
     depends_on:
       - db-produto
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/ms-catalogo-produtos/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
       SPRING_DATASOURCE_USERNAME: dbproduto
       SPRING_DATASOURCE_PASSWORD: passdbproduto
@@ -69,6 +75,7 @@ services:
     depends_on:
       - db-cliente
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-cliente:5432/db-cliente
       SPRING_DATASOURCE_USERNAME: dbcliente
       SPRING_DATASOURCE_PASSWORD: passdbcliente
@@ -81,6 +88,7 @@ services:
     depends_on:
       - db-pedido
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-pedido:5432/db-pedido
       SPRING_DATASOURCE_USERNAME: dbpedido
       SPRING_DATASOURCE_PASSWORD: passdbpedido
@@ -96,11 +104,26 @@ services:
     depends_on:
       - db-logistica
     environment:
+      PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-logistica:5432/db-logistica
       SPRING_DATASOURCE_USERNAME: dblogistica
       SPRING_DATASOURCE_PASSWORD: passdblogistica
       MSGERENCIAMENTOCLIENTES_URL: http://ms-gerenciamento-clientes:8080/ms-gerenciamento-clientes/
       MSGESTAOPEDIDOS_URL: http://ms-gestao-pedidos:8080/ms-gestao-pedidos/
+
+  ms-catalogo-produtos-batch:
+    container_name: ms-catalogo-produtos-batch
+    build: ../ms-gerenciamento-produtos-batch/.
+    depends_on:
+      ms-catalogo-produtos:
+        condition: service_healthy
+    environment:
+      PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-produto:5432/db-produto
+      SPRING_DATASOURCE_USERNAME: dbproduto
+      SPRING_DATASOURCE_PASSWORD: passdbproduto
+    volumes:
+      - ./volumes/produtos-batch-dados:/app/dados
 
   adminer:
     image: adminer

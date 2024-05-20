@@ -19,6 +19,12 @@ public class AprovarPagamento {
 
         Pedido pedido = pedidoGateway.findById(id).orElseThrow(() -> new BussinessErrorException("Pedido Informado não Cadastrado."));
 
+        if (pedido.getStatus().equalsIgnoreCase("ENTREGUE")) {
+            throw new BussinessErrorException("Pedido Entregue.");
+        } else if (!pedido.getStatus().equalsIgnoreCase("GERADO")) {
+            throw new BussinessErrorException("Pedido Pago.");
+        }
+
         pedido.setStatus(PedidoStatus.PAGAMENTO_APROVADO.toString());
         pedido.setDataPagamento(LocalDateTime.now());
 

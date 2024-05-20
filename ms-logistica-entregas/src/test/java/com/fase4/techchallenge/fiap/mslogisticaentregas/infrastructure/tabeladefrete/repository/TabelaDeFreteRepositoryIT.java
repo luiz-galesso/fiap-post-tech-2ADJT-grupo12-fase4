@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -36,7 +38,9 @@ class TabelaDeFreteRepositoryIT {
 
         assertThat(tabelaDeFreteArmazenado)
                 .usingRecursiveComparison()
-                .isEqualTo(tabelaDeFrete);
+                .ignoringFields("entregador.cnpj")
+                .isEqualTo(tabelaDeFrete)
+        ;
 
         assertThat(tabelaDeFreteArmazenado.getId())
                 .isNotNull();
@@ -58,9 +62,9 @@ class TabelaDeFreteRepositoryIT {
 
 
     @Nested
-    class ConsultarTabelaDeFretees {
+    class ConsultarTabelaDeFretes {
         @Test
-        void devePermitirListarTabelaDeFretees() {
+        void devePermitirListarTabelaDeFretes() {
 
             var tabelaDeFrete1 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
             var tabelaDeFrete2 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
@@ -92,25 +96,66 @@ class TabelaDeFreteRepositoryIT {
 
         }
 
- /*       @Test
-        void devePermitirConsultarTabelaDeFretePeloCnpj() {
-            var tabelaDeFreteGerado = TabelaDeFreteHelper.gerarTabelaDeFrete(null);
-            var tabelaDeFrete = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, tabelaDeFreteGerado);
+        /*@Test
+        void devePermitirListarTabelasDeFreteDoEntregador() {
+            var tabelaDeFrete1 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+            var tabelaDeFrete2 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
 
-            var cnpj = tabelaDeFrete.getCnpj();
+            var resultado = tabelaDeFreteRepository.findAllByEntregador_Id(tabelaDeFrete1.getEntregador().getId());
 
-            var tabelaDeFreteOptional = tabelaDeFreteRepository.findByCnpj(cnpj);
+            assertThat(resultado)
+                    .hasSize(2)
+                    .containsExactlyInAnyOrder(tabelaDeFrete1, tabelaDeFrete2);
+        }*/
+
+        /*@Test
+        void devePermitirBuscarOutrasTabelasDeFreteComMesmaOrigemDestinoDoMesmoEntregador() {
+            var tabelaDeFrete1 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+            var tabelaDeFrete2 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+
+            var tabelaDeFreteOptional = tabelaDeFreteRepository.findTabelaDeFreteByEntregador_IdAndCepOrigemAndCepDestinoAndIdNot(tabelaDeFrete1.getEntregador().getId(), tabelaDeFrete1.getCepOrigem(), tabelaDeFrete1.getCepDestinoInicial(), tabelaDeFrete1.getId());
+            assertThat(tabelaDeFreteOptional)
+                    .isPresent()
+                    .containsSame(tabelaDeFrete2);
+
+            tabelaDeFreteOptional.ifPresent(tabelaDeFrete -> {
+                assertThat(tabelaDeFrete)
+                        .usingRecursiveComparison()
+                        .isEqualTo(tabelaDeFrete2);
+            });
+        }*/
+
+        /*@Test
+        void devePermitirListarTabelaDeFreteDoEntregadorParaOrigemEDestino() {
+            var tabelaDeFrete = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+
+            var tabelaDeFreteOptional = tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestinoAndEntregador_Id(tabelaDeFrete.getCepOrigem(), tabelaDeFrete.getCepDestinoInicial(), tabelaDeFrete.getEntregador().getId());
             assertThat(tabelaDeFreteOptional)
                     .isPresent()
                     .containsSame(tabelaDeFrete);
 
-            tabelaDeFreteOptional.ifPresent(tabelaDeFreteArmazenado -> {
-                assertThat(tabelaDeFreteArmazenado)
+            tabelaDeFreteOptional.ifPresent(tabelaDeFreteGerada -> {
+                assertThat(tabelaDeFreteGerada)
                         .usingRecursiveComparison()
                         .isEqualTo(tabelaDeFrete);
             });
-        }
 
-*/
+
+        }*/
+        /*@Test
+        void devePermitirBuscarOpcoesDisponiveisDeFreteConformeOrigemEDestino() {
+            var tabelaDeFrete1 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+            var tabelaDeFrete2 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+            var tabelaDeFreteList = Arrays.asList(tabelaDeFrete1, tabelaDeFrete2);
+
+            var resultado = tabelaDeFreteRepository.findAllByCepOrigemAndCepDestinoAndEntregador_QuantidadeRecursosDisponiveisGreaterThanAndEntregador_SituacaoOrderByValorFrete(tabelaDeFrete1.getCepOrigem(),
+                    tabelaDeFrete1.getCepDestinoInicial(),
+                    1L,
+                    "ATIVO");
+
+            assertThat(resultado)
+                    .hasSize(2)
+                    .containsExactlyInAnyOrder(tabelaDeFrete1, tabelaDeFrete2);
+        }*/
     }
 }

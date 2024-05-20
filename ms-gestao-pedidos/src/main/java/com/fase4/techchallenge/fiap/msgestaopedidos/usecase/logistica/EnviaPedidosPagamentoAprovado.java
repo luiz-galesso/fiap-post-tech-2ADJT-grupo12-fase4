@@ -38,7 +38,8 @@ public class EnviaPedidosPagamentoAprovado {
                     new EntregaDTO(pedido.getIdPedido(),
                             pedido.getEmailCliente(),
                             new EnderecoDestinoDTO(pedido.getEndereco().getLogradouro(),pedido.getEndereco().getNumero(),pedido.getEndereco().getBairro(),pedido.getEndereco().getComplemento(),pedido.getEndereco().getCep(),pedido.getEndereco().getCidade(),pedido.getEndereco().getEstado(),pedido.getEndereco().getReferencia()),
-                            pedido.getDataCriacao()
+                            pedido.getDataCriacao(),
+                            pedido.getIdTabelaFrete()
                     );
             Object response = logisticaClient.enviaEntrega(entrega);
             pedido.setStatus(PedidoStatus.EM_LOGISTICA.toString());

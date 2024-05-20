@@ -7,6 +7,7 @@ import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.entregado
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -21,4 +22,6 @@ public class EntregaGateway {
     public Optional<Entrega> findByIdPedido(Long id) {
         return this.entregaRepository.findById(id);
     }
+
+    public List<Entrega> findAll(){ return this.entregaRepository.findAll();};
 }
