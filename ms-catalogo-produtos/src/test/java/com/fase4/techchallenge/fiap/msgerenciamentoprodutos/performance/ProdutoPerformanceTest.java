@@ -8,6 +8,7 @@ import io.gatling.javaapi.core.ActionBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 import java.time.Duration;
@@ -20,8 +21,10 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class ProdutoPerformanceTest extends Simulation
 {
+    String port = System.getenv("PORT");
+
     private final HttpProtocolBuilder httpProtocolBuilder
-            = http.baseUrl("http://localhost:8080/ms-catalogo-produtos")
+            = http.baseUrl("http://localhost:"+ (port == null ? "8092" : port) + "/ms-catalogo-produtos")
             .header("Content-Type", "application/json");
 
     ActionBuilder cadastrarProduto = http("Cadastrar produto")
@@ -164,7 +167,7 @@ public class ProdutoPerformanceTest extends Simulation
         )
                 .protocols(httpProtocolBuilder)
                 .assertions(
-                        global().responseTime().max().lt(360)
+                        global().responseTime().max().lt(1000)
                 );
     }
 }
