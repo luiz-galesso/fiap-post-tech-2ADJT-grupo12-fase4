@@ -10,6 +10,7 @@ import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.Cada
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.endereco.CadastrarEndereco;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.utils.ClienteHelper;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.utils.EnderecoHelper;
+import com.github.javafaker.Faker;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,7 @@ public class EnderecoControllerIT {
     CadastrarEndereco cadastrarEndereco;
     @Autowired
     EnderecoGateway enderecoGateway;
+    private final Faker faker = new Faker();
 
     @LocalServerPort
     private int port;
@@ -51,7 +53,7 @@ public class EnderecoControllerIT {
     @Test
     void devePermitirCadastrarEndereco() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
-        Cliente cliente = ClienteHelper.gerarCliente();//cadastrarCliente.execute(ClienteHelper.gerarClienteInsert());
+        Cliente cliente = ClienteHelper.gerarCliente();
 
         given()
                 .filter(new AllureRestAssured())
@@ -69,7 +71,7 @@ public class EnderecoControllerIT {
     @Test
     void devePermitirAtualizarEndereco() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
-        Cliente cliente = ClienteHelper.gerarCliente();//cadastrarCliente.execute(ClienteHelper.gerarClienteInsert());
+        Cliente cliente = ClienteHelper.gerarCliente();
         Endereco endereco = cadastrarEndereco.execute(cliente.getEmail(), enderecoInsertDTO);
         EnderecoUpdateDTO enderecoUpdateDTO = EnderecoHelper.gerarEnderecoUpdate();
 
@@ -89,7 +91,7 @@ public class EnderecoControllerIT {
     @Test
     void devePermitirObterEnderecoPorId() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
-        Cliente cliente = ClienteHelper.gerarCliente();//cadastrarCliente.execute(ClienteHelper.gerarClienteInsert());
+        Cliente cliente = ClienteHelper.gerarCliente();
         Endereco endereco = cadastrarEndereco.execute(cliente.getEmail(), enderecoInsertDTO);
 
         given()
@@ -105,7 +107,7 @@ public class EnderecoControllerIT {
     @Test
     void devePermitirObterEnderecosPorCliente() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
-        Cliente cliente = ClienteHelper.gerarCliente();//cadastrarCliente.execute(ClienteHelper.gerarClienteInsert());
+        Cliente cliente = ClienteHelper.gerarCliente();
         Endereco endereco = cadastrarEndereco.execute(cliente.getEmail(), enderecoInsertDTO);
 
         given()
@@ -119,15 +121,13 @@ public class EnderecoControllerIT {
                 .body(matchesJsonSchemaInClasspath("./schemas/endereco_list_schema.json"));
     }
 
-
     @Test
     void devePermitirRemoverEndereco() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
         ClienteInsertDTO clienteInsertDTO = ClienteHelper.gerarClienteInsert();
-        clienteInsertDTO.setEmail(ClienteHelper.generateRandomEmail());
+        clienteInsertDTO.setEmail(ClienteHelper.gerarNomeAleatorio() + "@email.com");
         Cliente cliente = cadastrarCliente.execute(clienteInsertDTO);
         Endereco endereco = cadastrarEndereco.execute(cliente.getEmail(), enderecoInsertDTO);
-
 
         given()
                 .filter(new AllureRestAssured())

@@ -4,6 +4,7 @@ import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.model
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.cliente.controller.dto.ClienteInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.cliente.controller.dto.ClienteUpdateDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.utils.ClienteHelper;
+import com.github.javafaker.Faker;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
@@ -34,7 +35,7 @@ public class ClienteStepDefinition {
     @Quando("cadastrar um novo cliente")
     public Cliente cadastrar_um_novo_cliente() {
         clienteInsertDTO = ClienteHelper.gerarClienteInsert();
-        clienteInsertDTO.setEmail(ClienteHelper.generateRandomEmail());
+        clienteInsertDTO.setEmail(ClienteHelper.gerarNomeAleatorio() + "@email.com");
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteInsertDTO)
