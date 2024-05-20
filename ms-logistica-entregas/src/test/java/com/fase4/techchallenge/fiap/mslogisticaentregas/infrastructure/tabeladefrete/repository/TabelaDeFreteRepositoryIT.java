@@ -70,7 +70,7 @@ class TabelaDeFreteRepositoryIT {
             var resultado = tabelaDeFreteRepository.findAll();
 
             assertThat(resultado)
-                    .hasSize(22);
+                    .hasSize(23);
         }
 
         @Test

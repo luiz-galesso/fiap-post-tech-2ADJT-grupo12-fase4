@@ -101,19 +101,19 @@ public class EntregadorControllerTest {
         }*/
     }
 
-    @Nested
-    class BuscarEntregador {
-        @Test
-        void devePermitirBuscarEntregadorPeloId() throws Exception {
-            var entregador = EntregadorHelper.gerarEntregador(1L);
-            when(obterEntregadorPeloId.execute(any(Long.class))).thenReturn(entregador);
+        @Nested
+        class BuscarEntregador {
+            @Test
+            void devePermitirBuscarEntregadorPeloId() throws Exception {
+                var entregador = EntregadorHelper.gerarEntregador(1L);
+                when(obterEntregadorPeloId.execute(any(Long.class))).thenReturn(entregador);
 
-            mockMvc.perform(get("/entregador/{id}", entregador.getId())).andExpect(status().isOk());
+                mockMvc.perform(get("/entregador/{id}", entregador.getId())).andExpect(status().isOk());
 
-            verify(obterEntregadorPeloId, times(1)).execute(any(Long.class));
+                verify(obterEntregadorPeloId, times(1)).execute(any(Long.class));
+            }
         }
-    }
-}
+        }
 
 
  /*       @Test

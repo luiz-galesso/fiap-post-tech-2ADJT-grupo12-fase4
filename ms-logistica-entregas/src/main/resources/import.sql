@@ -17,7 +17,7 @@ insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_fi
 insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 60000001, 80000000, 23, 48, 2);
 insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 80000001, 100000000, 12, 72, 2);
 
-insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 00000000, 20000000, 20, 24, 3;
+insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 00000000, 20000000, 20, 24, 3);
 insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 20000001, 40000000, 66, 48, 3);
 insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 40000001, 60000000, 45, 48, 3);
 insert into tb_tabela_frete (id, cep_origem, cep_destino_inicial, cep_destino_final, valor_frete, prazo_entrega_em_horas, entregador_id) values (NEXTVAL('tabelafrete_sequence'), 9370390, 60000001, 80000000, 34, 96, 3);
