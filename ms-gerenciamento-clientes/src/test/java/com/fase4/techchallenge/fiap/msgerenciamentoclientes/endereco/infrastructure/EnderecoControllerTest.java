@@ -118,7 +118,7 @@ public class EnderecoControllerTest {
         verify(obterEnderecosPeloCliente, times(1)).execute(any(String.class));
     }
 
-    /*@Test
+    @Test
     void devePermitirRemoverEndereco() throws Exception {
         Cliente cliente = ClienteHelper.gerarCliente();
         cliente.setEmail("ana.ferreira@example.com");
@@ -130,7 +130,7 @@ public class EnderecoControllerTest {
 
         mockMvc.perform(delete("/clientes/{idCliente}/enderecos/{idEndereco}", cliente.getEmail(), endereco.getId()))
                 .andExpect(status().isOk());
-        verify(removerEnderecoPeloId, times(1)).execute(any(String.class), any(Integer.class));
-    }*/
+        verify(obterEnderecoPeloId, times(1)).execute(any(String.class), any(Integer.class));
+    }
 
 }

@@ -3,6 +3,8 @@ package com.fase4.techchallenge.fiap.msgerenciamentoclientes.cliente.usecase;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.gateway.ClienteGateway;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.model.Cliente;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.RemoverClientePeloId;
+import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.endereco.ObterEnderecosPeloCliente;
+import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.endereco.RemoverEnderecoPeloId;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.exception.BussinessErrorException;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.utils.ClienteHelper;
 import org.junit.jupiter.api.AfterEach;
@@ -21,13 +23,17 @@ class RemoverClientePeloIdTest {
 
     @Mock
     ClienteGateway clienteGateway;
+    @Mock
+    RemoverEnderecoPeloId removerEnderecoPeloId;
+    @Mock
+    ObterEnderecosPeloCliente obterEnderecosPeloCliente;
     RemoverClientePeloId removerClientePeloId;
     AutoCloseable openMocks;
 
     @BeforeEach
     void setup() {
         openMocks = MockitoAnnotations.openMocks(this);
-        removerClientePeloId = new RemoverClientePeloId(clienteGateway);
+        removerClientePeloId = new RemoverClientePeloId(clienteGateway, obterEnderecosPeloCliente, removerEnderecoPeloId);
     }
 
     @AfterEach

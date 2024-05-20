@@ -114,7 +114,7 @@ public class EnderecoControllerIT {
     }
 
 
-    /*@Test
+    @Test
     void devePermitirRemoverEndereco() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
         Cliente cliente = cadastrarCliente.execute(ClienteHelper.gerarClienteInsert());
@@ -127,6 +127,6 @@ public class EnderecoControllerIT {
                 .delete("/ms-gerenciamento-clientes/clientes/{idCliente}/enderecos/{idEndereco}", cliente.getEmail(), endereco.getId())
                 .then()
                 .statusCode(HttpStatus.OK.value());
-    }*/
+    }
 
 }
