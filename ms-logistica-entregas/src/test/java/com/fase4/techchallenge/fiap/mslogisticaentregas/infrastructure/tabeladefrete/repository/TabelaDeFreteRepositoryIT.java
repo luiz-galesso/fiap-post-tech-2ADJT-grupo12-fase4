@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -72,7 +70,7 @@ class TabelaDeFreteRepositoryIT {
             var resultado = tabelaDeFreteRepository.findAll();
 
             assertThat(resultado)
-                    .hasSize(3);
+                    .hasSize(22);
         }
 
         @Test
@@ -93,6 +91,35 @@ class TabelaDeFreteRepositoryIT {
                         .usingRecursiveComparison()
                         .isEqualTo(tabelaDeFrete);
             });
+
+        }
+
+        @Test
+        void devePermitirBuscarTabelaDeFretePorCepOrigemERangeCepDestinoEEntregador() {
+            var tabelaDeFrete = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+
+            var tabelaDeFreteOptional = tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(tabelaDeFrete.getCepOrigem(), tabelaDeFrete.getCepDestinoInicial(), tabelaDeFrete.getCepDestinoFinal(), tabelaDeFrete.getEntregador());
+
+            assertThat(tabelaDeFreteOptional)
+                    .isPresent()
+                    .containsSame(tabelaDeFrete);
+            tabelaDeFreteOptional.ifPresent(tabelaDeFreteObtido -> {
+                assertThat(tabelaDeFreteObtido)
+                        .usingRecursiveComparison()
+                        .isEqualTo(tabelaDeFrete);
+            });
+        }
+
+        @Test
+        void devePermitirListarTabelasDeFreteDeUmaOrigemERangeDestino() {
+            var tabelaDeFrete1 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+            var tabelaDeFrete2 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+
+            var resultado = tabelaDeFreteRepository.findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(tabelaDeFrete1.getCepOrigem(), tabelaDeFrete1.getCepDestinoInicial(),tabelaDeFrete1.getCepDestinoFinal()-1L);
+
+            assertThat(resultado)
+                    .hasSize(2)
+                    .containsExactlyInAnyOrder(tabelaDeFrete1, tabelaDeFrete2);
 
         }
 

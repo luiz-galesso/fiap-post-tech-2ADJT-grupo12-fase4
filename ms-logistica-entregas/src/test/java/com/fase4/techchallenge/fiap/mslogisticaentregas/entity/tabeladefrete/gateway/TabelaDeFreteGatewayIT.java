@@ -82,6 +82,35 @@ class TabelaDeFreteGatewayIT {
             });
         }
 
+        @Test
+        void devePermitirBuscarTabelaDeFretePorCepOrigemERangeCepDestinoEEntregador() {
+            var tabelaDeFrete = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+
+            var tabelaDeFreteOptional = tabelaDeFreteGateway.findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(tabelaDeFrete.getCepOrigem(), tabelaDeFrete.getCepDestinoInicial(), tabelaDeFrete.getCepDestinoFinal(), tabelaDeFrete.getEntregador());
+
+            assertThat(tabelaDeFreteOptional)
+                    .isPresent()
+                    .containsSame(tabelaDeFrete);
+            tabelaDeFreteOptional.ifPresent(tabelaDeFreteObtido -> {
+                assertThat(tabelaDeFreteObtido)
+                        .usingRecursiveComparison()
+                        .isEqualTo(tabelaDeFrete);
+            });
+        }
+
+        @Test
+        void devePermitirListarTabelasDeFreteDeUmaOrigemERangeDestino() {
+            var tabelaDeFrete1 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+            var tabelaDeFrete2 = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));
+
+            var resultado = tabelaDeFreteGateway.findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(tabelaDeFrete1.getCepOrigem(), tabelaDeFrete1.getCepDestinoInicial());
+
+            assertThat(resultado)
+                    .hasSize(2)
+                    .containsExactlyInAnyOrder(tabelaDeFrete1, tabelaDeFrete2);
+
+        }
+
         /*@Test
         void devePermitirBuscarTabelaDeFreteDoEntregadorPorOrigemDestino() {
             var tabelaDeFrete = TabelaDeFreteHelper.registrarTabelaDeFrete(tabelaDeFreteRepository, TabelaDeFreteHelper.gerarTabelaDeFrete(null));

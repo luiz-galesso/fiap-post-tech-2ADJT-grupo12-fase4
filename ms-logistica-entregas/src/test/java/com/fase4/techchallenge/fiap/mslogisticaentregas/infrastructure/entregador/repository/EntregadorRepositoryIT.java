@@ -69,7 +69,7 @@ class EntregadorRepositoryIT {
             var resultado = entregadorRepository.findAll();
 
             assertThat(resultado)
-                    .hasSize(4);
+                    .hasSize(7);
         }
 
         @Test

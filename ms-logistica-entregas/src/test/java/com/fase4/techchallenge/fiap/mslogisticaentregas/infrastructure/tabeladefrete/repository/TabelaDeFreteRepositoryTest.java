@@ -1,5 +1,6 @@
 package com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.tabeladefrete.repository;
 
+import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.entregador.model.Entregador;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.entity.tabeladefrete.model.TabelaDeFrete;
 import com.fase4.techchallenge.fiap.mslogisticaentregas.infrastructure.tabeladefrete.utils.TabelaDeFreteHelper;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +33,7 @@ public class TabelaDeFreteRepositoryTest {
         openMocks.close();
     }
 
-    /*@Test
+    @Test
     void devePermitirRegistrarTabelaDeFrete() {
         TabelaDeFrete tabelaDeFrete = TabelaDeFreteHelper.gerarTabelaDeFrete(null);
         when(tabelaDeFreteRepository.save(any(TabelaDeFrete.class))).thenAnswer(a -> a.getArguments()[0]);
@@ -84,6 +85,47 @@ public class TabelaDeFreteRepositoryTest {
             });
         }
 
+        @Test
+        void devePermitirBuscarTabelaDeFretePorCepOrigemERangeCepDestinoEEntregador() {
+            var tabelaDeFrete1 = TabelaDeFreteHelper.gerarTabelaDeFrete(1L);
+
+            when(tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(anyLong(), anyLong(), anyLong(), any(Entregador.class))).thenReturn(Optional.of(tabelaDeFrete1));
+
+            var tabelaDeFreteOptional = tabelaDeFreteRepository.findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(tabelaDeFrete1.getEntregador().getId(), tabelaDeFrete1.getCepOrigem(), tabelaDeFrete1.getCepDestinoInicial(), tabelaDeFrete1.getEntregador());
+
+            verify(tabelaDeFreteRepository, times(1)).findTabelaDeFreteByCepOrigemAndCepDestinoInicialAndCepDestinoFinalAndEntregador(anyLong(), anyLong(), anyLong(), any(Entregador.class));
+            assertThat(tabelaDeFreteOptional)
+                    .isPresent()
+                    .containsSame(tabelaDeFrete1)
+            ;
+            tabelaDeFreteOptional.ifPresent(tabelaDeFreteArmazenado -> {
+                assertThat(tabelaDeFreteArmazenado)
+                        .usingRecursiveComparison()
+                        .isEqualTo(tabelaDeFrete1);
+            });
+
+
+        }
+
+        @Test
+        void devePermitirListarTabelasDeFreteDeUmaOrigemERangeDestino() {
+            TabelaDeFrete tabelaDeFrete1 = TabelaDeFreteHelper.gerarTabelaDeFrete(1L);
+            TabelaDeFrete tabelaDeFrete2 = TabelaDeFreteHelper.gerarTabelaDeFrete(2L);
+            var tabelaDeFreteList = Arrays.asList(tabelaDeFrete1, tabelaDeFrete2);
+
+            when(tabelaDeFreteRepository.findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(anyLong(), anyLong(), anyLong()))
+                    .thenReturn(tabelaDeFreteList);
+
+            var resultado = tabelaDeFreteRepository.findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(tabelaDeFrete1.getCepOrigem(), tabelaDeFrete1.getCepDestinoInicial(),tabelaDeFrete1.getCepDestinoFinal());
+
+            verify(tabelaDeFreteRepository, times(1))
+                    .findByCepOrigemAndCepDestinoInicialLessThanEqualAndCepDestinoFinalGreaterThan(anyLong(), anyLong(), anyLong());
+
+            assertThat(resultado)
+                    .hasSize(2)
+                    .containsExactlyInAnyOrder(tabelaDeFrete1, tabelaDeFrete2);
+        }
+/*
         @Test
         void devePermitirListarTabelasDeFreteDoEntregador() {
             var tabelaDeFrete1 = TabelaDeFreteHelper.gerarTabelaDeFrete(null);
@@ -160,6 +202,6 @@ public class TabelaDeFreteRepositoryTest {
                     .hasSize(2)
                     .containsExactlyInAnyOrder(tabelaDeFrete1, tabelaDeFrete2);
 
-        }
-    }*/
+        }*/
+    }
 }

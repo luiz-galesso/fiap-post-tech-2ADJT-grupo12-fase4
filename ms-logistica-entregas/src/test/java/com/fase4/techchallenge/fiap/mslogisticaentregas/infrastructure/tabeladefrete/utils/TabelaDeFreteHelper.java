@@ -17,7 +17,7 @@ public class TabelaDeFreteHelper {
                         .build())
                 .cepOrigem(84015030L)
                 .cepDestinoInicial(70000000L)
-                .cepDestinoInicial(80000000L)
+                .cepDestinoFinal(80000000L)
                 .valorFrete(80.25)
                 .prazoEntregaEmHoras(6L)
                 .build();
