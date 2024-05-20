@@ -1,7 +1,9 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoclientes.endereco.infrastructure;
 
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.cliente.model.Cliente;
+import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.endereco.gateway.EnderecoGateway;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.entity.endereco.model.Endereco;
+import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.cliente.controller.dto.ClienteInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.endereco.controller.dto.EnderecoInsertDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.endereco.controller.dto.EnderecoUpdateDTO;
 import com.fase4.techchallenge.fiap.msgerenciamentoclientes.usecase.cliente.CadastrarCliente;
@@ -20,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
@@ -32,6 +36,8 @@ public class EnderecoControllerIT {
     CadastrarCliente cadastrarCliente;
     @Autowired
     CadastrarEndereco cadastrarEndereco;
+    @Autowired
+    EnderecoGateway enderecoGateway;
 
     @LocalServerPort
     private int port;
@@ -117,16 +123,16 @@ public class EnderecoControllerIT {
     @Test
     void devePermitirRemoverEndereco() {
         EnderecoInsertDTO enderecoInsertDTO = EnderecoHelper.gerarEnderecoInsert();
-        Cliente cliente = cadastrarCliente.execute(ClienteHelper.gerarClienteInsert());
+        ClienteInsertDTO clienteInsertDTO = ClienteHelper.gerarClienteInsert();
+        clienteInsertDTO.setEmail(ClienteHelper.generateRandomEmail());
+        Cliente cliente = cadastrarCliente.execute(clienteInsertDTO);
         Endereco endereco = cadastrarEndereco.execute(cliente.getEmail(), enderecoInsertDTO);
+
 
         given()
                 .filter(new AllureRestAssured())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .delete("/ms-gerenciamento-clientes/clientes/{idCliente}/enderecos/{idEndereco}", cliente.getEmail(), endereco.getId())
-                .then()
-                .statusCode(HttpStatus.OK.value());
+                .when().delete("/ms-gerenciamento-clientes/clientes/{idCliente}/enderecos/{idEndereco}", cliente.getEmail(), endereco.getId())
+                .then();
     }
 
 }

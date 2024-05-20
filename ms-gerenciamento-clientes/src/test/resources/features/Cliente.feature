@@ -1,34 +1,26 @@
 # language: pt
 
-Funcionalidade: API - Mensagens
-
-  @smoke
-  Cenario: Registrar Mensagem
-    Quando registrar uma nova mensagem
-    Entao a mensagem é registrada com sucesso
-    E deve ser apresentada
-
-  @smoke
-  Cenario: Buscar Mensagem
-    Dado que uma mensagem ja foi publicada
-    Quando efetuar a busca da mensagem
-    Entao a mensagem é exibida com sucesso
-
-  @low
-  Cenario: Alterar Mensagem
-    Dado que uma mensagem ja foi publicada
-    Quando efetuar requisição para alteração da mensagem
-    Entao a mensagem é atualizada com sucesso
-    E deve ser apresentada
+Funcionalidade: Cliente
 
   @high
-  Cenario: Remover Mensagem
-    Dado que uma mensagem ja foi publicada
-    Quando requisitar a remoção da mensagem
-    Entao a mensagem é removida com sucesso
+  Cenario: Cadastrar Cliente
+    Quando cadastrar um novo cliente
+    Entao o cliente é registrado com sucesso
+    E deve ser apresentado
 
-  @ignore
-  Cenario: Remover Mensagem de uma forma diferente
-    Dado que uma mensagem ja foi publicada
-    Quando requisitar a remoção da mensagem
-    Entao a mensagem é removida com sucesso
+  Cenario: Buscar Cliente
+    Dado que um cliente ja foi cadastrado
+    Quando efetuar a busca pelo email do cliente
+    Entao o cliente é exibido com sucesso
+
+  @low
+  Cenario: Atualizar Cliente
+    Dado que um cliente ja foi cadastrado
+    Quando efetuar requisição para atualização do cliente
+    Entao o cliente é atualizado com sucesso
+    E deve ser apresentado
+
+  Cenario: Remover Cliente
+    Dado que um cliente ja foi cadastrado
+    Quando requisitar a remoção do cliente
+    Entao o cliente é removido com sucesso

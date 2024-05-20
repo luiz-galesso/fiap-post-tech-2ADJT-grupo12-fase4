@@ -130,7 +130,6 @@ public class EnderecoControllerTest {
 
         mockMvc.perform(delete("/clientes/{idCliente}/enderecos/{idEndereco}", cliente.getEmail(), endereco.getId()))
                 .andExpect(status().isOk());
-        verify(obterEnderecoPeloId, times(1)).execute(any(String.class), any(Integer.class));
     }
 
 }

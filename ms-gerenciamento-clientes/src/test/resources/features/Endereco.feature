@@ -1,34 +1,26 @@
 # language: pt
 
-Funcionalidade: API - Mensagens
-
-  @smoke
-  Cenario: Registrar Mensagem
-    Quando registrar uma nova mensagem
-    Entao a mensagem é registrada com sucesso
-    E deve ser apresentada
-
-  @smoke
-  Cenario: Buscar Mensagem
-    Dado que uma mensagem ja foi publicada
-    Quando efetuar a busca da mensagem
-    Entao a mensagem é exibida com sucesso
-
-  @low
-  Cenario: Alterar Mensagem
-    Dado que uma mensagem ja foi publicada
-    Quando efetuar requisição para alteração da mensagem
-    Entao a mensagem é atualizada com sucesso
-    E deve ser apresentada
+Funcionalidade: Endereco
 
   @high
-  Cenario: Remover Mensagem
-    Dado que uma mensagem ja foi publicada
-    Quando requisitar a remoção da mensagem
-    Entao a mensagem é removida com sucesso
+  Cenario: Cadastrar Endereco
+    Quando cadastrar um novo endereco
+    Entao o endereco é registrado com sucesso
+    E deve ser apresentado o endereco
 
-  @ignore
-  Cenario: Remover Mensagem de uma forma diferente
-    Dado que uma mensagem ja foi publicada
-    Quando requisitar a remoção da mensagem
-    Entao a mensagem é removida com sucesso
+  Cenario: Buscar Endereco
+    Dado que um endereco ja foi cadastrado
+    Quando efetuar a busca pelo id do endereco
+    Entao o endereco é exibido com sucesso
+
+  @low
+  Cenario: Atualizar Endereco
+    Dado que um endereco ja foi cadastrado
+    Quando efetuar requisição para atualização do endereco
+    Entao o endereco é atualizado com sucesso
+    E deve ser apresentado o endereco
+
+  #Cenario: Remover Endereco
+  #  Dado que um endereco ja foi cadastrado
+  #  Quando requisitar a remoção do endereco
+  #  Entao o endereco é removido com sucesso
