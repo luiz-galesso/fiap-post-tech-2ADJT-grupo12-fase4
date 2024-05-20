@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb_cliente")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {

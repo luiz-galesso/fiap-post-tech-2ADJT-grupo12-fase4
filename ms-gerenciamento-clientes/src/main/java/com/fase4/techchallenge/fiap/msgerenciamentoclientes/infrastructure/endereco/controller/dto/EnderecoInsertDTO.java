@@ -1,9 +1,11 @@
 package com.fase4.techchallenge.fiap.msgerenciamentoclientes.infrastructure.endereco.controller.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class EnderecoInsertDTO {
 
     private String logradouro;

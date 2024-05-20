@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "tb_endereco")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {
